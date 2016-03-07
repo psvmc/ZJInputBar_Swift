@@ -120,6 +120,7 @@ class ViewController: UIViewController,UITextViewDelegate {
         
     }
     
+    //更多对应View显示
     func showMoreView(){
         self.isShowMoreView = true;
         viewPaddingBottom = 150;
@@ -131,6 +132,7 @@ class ViewController: UIViewController,UITextViewDelegate {
             }
     }
     
+    //更多对应View隐藏
     func hideMoreView(){
         self.isShowMoreView = false;
         viewPaddingBottom = 0;
@@ -204,7 +206,7 @@ class ViewController: UIViewController,UITextViewDelegate {
             return false;
         }else{
             return true;
-        } 
+        }
     }
     
     
