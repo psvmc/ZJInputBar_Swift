@@ -29,8 +29,8 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     //添加键盘的观察者
     override func viewWillAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ViewController.keyBoardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ViewController.keyBoardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     //初始化
@@ -41,14 +41,14 @@ class ViewController: UIViewController,UITextViewDelegate {
         inputMoreCell.frame = CGRectMake(0, screenHeight, screenWidth, 150);
         
         //添加事件
-        inputBarCell.leftVoiceButton.addTarget(self, action: "leftVoiceButtonClick:", forControlEvents: UIControlEvents.TouchUpInside);
-        inputBarCell.leftKeyboardButton.addTarget(self, action: "leftKeyboardButtonClick:", forControlEvents: UIControlEvents.TouchUpInside);
-        inputBarCell.rightFaceButton.addTarget(self, action: "rightFaceButtonClick:", forControlEvents: UIControlEvents.TouchUpInside);
-        inputBarCell.rightKeyboardButton.addTarget(self, action: "rightKeyboardButtonClick:", forControlEvents: UIControlEvents.TouchUpInside);
-        inputBarCell.rightAddButton.addTarget(self, action: "rightAddButtonClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        inputBarCell.leftVoiceButton.addTarget(self, action: #selector(ViewController.leftVoiceButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        inputBarCell.leftKeyboardButton.addTarget(self, action: #selector(ViewController.leftKeyboardButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        inputBarCell.rightFaceButton.addTarget(self, action: #selector(ViewController.rightFaceButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        inputBarCell.rightKeyboardButton.addTarget(self, action: #selector(ViewController.rightKeyboardButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        inputBarCell.rightAddButton.addTarget(self, action: #selector(ViewController.rightAddButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         inputBarCell.inputTextView.returnKeyType = UIReturnKeyType.Done;
         inputBarCell.inputTextView.delegate = self;
-        
+        inputBarCell.inputTextView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag;
         self.view.addSubview(inputBarCell);
         self.view.addSubview(inputMoreCell);
     }
