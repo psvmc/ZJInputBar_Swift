@@ -11,34 +11,28 @@ import UIKit
 class ViewController: UIViewController,UITextViewDelegate {
     
     var inputBarCell:InputBarCell!;//输入的Bar
-    var inputMoreCell:InputMoreCell!;//更多对应的View
     var screenWidth:CGFloat! = UIScreen.main.bounds.width;//屏幕的宽度
     var screenHeight:CGFloat! = UIScreen.main.bounds.height;//屏幕的高度
-    var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
-    var isShowMoreView = false;//是否显示更多的View
-    var isShowKeyboard = false;//是否显示输入法
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initInputBar();
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     //添加键盘的观察者
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector:#selector(ViewController.keyBoardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector:#selector(ViewController.keyBoardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(ViewController.keyBoardWillUIKeyboardWillChangeFrame(_:)), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
     }
     
     //初始化
     func initInputBar(){
         inputBarCell = Bundle.main.loadNibNamed("InputBarCell", owner: self, options: nil)?.first as! InputBarCell;
-        inputBarCell.frame = CGRect(x: 0, y: screenHeight - 50, width: screenWidth, height: 50);
-        inputMoreCell = Bundle.main.loadNibNamed("InputMoreCell", owner: self, options: nil)?.first as! InputMoreCell;
-        inputMoreCell.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: 150);
+        inputBarCell.frame = CGRect(x: 0, y: screenHeight - 50, width: screenWidth, height: 200);
         
         //添加事件
         inputBarCell.leftVoiceButton.addTarget(self, action: #selector(ViewController.leftVoiceButtonClick(_:)), for: UIControlEvents.touchUpInside);
@@ -50,146 +44,112 @@ class ViewController: UIViewController,UITextViewDelegate {
         inputBarCell.inputTextView.delegate = self;
         inputBarCell.inputTextView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag;
         self.view.addSubview(inputBarCell);
-        self.view.addSubview(inputMoreCell);
     }
     
-    func leftVoiceButtonClick(_ button:UIButton){
-        inputBarCell.leftKeyboardButton.isHidden = false;
-        inputBarCell.leftVoiceButton.isHidden = true;
-        inputBarCell.rightFaceButton.isHidden = false;
-        inputBarCell.rightKeyboardButton.isHidden = true;
-        inputBarCell.midVoiceOutView.isHidden = false;
-        inputBarCell.midInputOutView.isHidden = true;
-        inputBarCell.inputTextView.resignFirstResponder();
-        if(self.isShowMoreView){
-            hideMoreView();
-        }
-        
-        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - 50, width: screenWidth, height: 50);
-    }
-    
-    func leftKeyboardButtonClick(_ button:UIButton){
-        inputBarCell.leftKeyboardButton.isHidden = true;
-        inputBarCell.leftVoiceButton.isHidden = false;
-        inputBarCell.midVoiceOutView.isHidden = true;
-        inputBarCell.midInputOutView.isHidden = false;
-        inputBarCell.inputTextView.becomeFirstResponder();
-        textViewDidChange(inputBarCell.inputTextView);
-    }
-    
-    func rightFaceButtonClick(_ button:UIButton){
-        inputBarCell.rightFaceButton.isHidden = true;
-        inputBarCell.rightKeyboardButton.isHidden = false;
-        inputBarCell.leftKeyboardButton.isHidden = true;
-        inputBarCell.leftVoiceButton.isHidden = false;
-        inputBarCell.inputTextView.resignFirstResponder();
+    @objc func leftVoiceButtonClick(_ button:UIButton){
+        self.inputBarCell.changeStyle(.LeftVoice)
         showMoreView();
-        
-        //表情输入时  切换成输入框
-        inputBarCell.midVoiceOutView.isHidden = true;
-        inputBarCell.midInputOutView.isHidden = false;
-        inputMoreCell.faceView.isHidden = false;
-        inputMoreCell.otherItemView.isHidden = true;
-        
-        textViewDidChange(inputBarCell.inputTextView);
+        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - 50, width: screenWidth, height: 250);
     }
     
-    func rightKeyboardButtonClick(_ button:UIButton){
-        inputBarCell.rightKeyboardButton.isHidden = true;
-        inputBarCell.rightFaceButton.isHidden = false;
-        inputBarCell.midVoiceOutView.isHidden = true;
-        inputBarCell.midInputOutView.isHidden = false;
-        inputBarCell.inputTextView.becomeFirstResponder();
-        textViewDidChange(inputBarCell.inputTextView);
+    @objc func leftKeyboardButtonClick(_ button:UIButton){
+        self.inputBarCell.changeStyle(.LeftKeybord)
     }
     
-    func rightAddButtonClick(_ button:UIButton){
-        inputBarCell.inputTextView.resignFirstResponder();
-        if(self.isShowMoreView){
-            if(inputMoreCell.otherItemView.isHidden){
-                inputMoreCell.faceView.isHidden = true;
-                inputMoreCell.otherItemView.isHidden = false;
+    @objc func rightFaceButtonClick(_ button:UIButton){
+        self.inputBarCell.changeStyle(.RightFace)
+        showMoreView();
+    }
+    
+    @objc func rightKeyboardButtonClick(_ button:UIButton){
+        self.inputBarCell.changeStyle(.RightKeybord)
+    }
+    
+    @objc func rightAddButtonClick(_ button:UIButton){
+        self.inputBarCell.changeStyle(.RightAdd)
+        if(self.inputBarCell.isShowMoreView){
+            if(inputBarCell.otherView.isHidden){
             }else{
                 hideMoreView();
             }
         }else{
             showMoreView();
-            inputMoreCell.faceView.isHidden = true;
-            inputMoreCell.otherItemView.isHidden = false;
         }
         
     }
     
     //更多对应View显示
     func showMoreView(){
-        self.isShowMoreView = true;
-        viewPaddingBottom = 150;
+        self.inputBarCell.isShowMoreView = true;
+        self.inputBarCell.viewPaddingBottom = 200;
         UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
-                self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -150)
-                self.inputMoreCell.transform = CGAffineTransform(translationX: 0,y: -150)
-            }) { (result) -> Void in
+            self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -200)
+        }) { (result) -> Void in
             
-            }
+        }
     }
     
     //更多对应View隐藏
     func hideMoreView(){
-        self.isShowMoreView = false;
-        viewPaddingBottom = 0;
+        self.inputBarCell.isShowMoreView = false;
+        self.inputBarCell.viewPaddingBottom = 0;
         inputBarCell.rightKeyboardButton.isHidden = true;
         inputBarCell.rightFaceButton.isHidden = false;
         UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.inputBarCell!.transform = CGAffineTransform.identity
-            self.inputMoreCell.transform = CGAffineTransform.identity
-            }) { (result) -> Void in
-                
+        }) { (result) -> Void in
+            
         }
     }
     
-    //键盘显示
-    func keyBoardWillShow(_ notification:Notification){
-        hideMoreView();
-        inputBarCell.rightKeyboardButton.isHidden = true;
-        inputBarCell.rightFaceButton.isHidden = false;
-        self.isShowKeyboard = true;
-        let userInfo = NSDictionary(dictionary: (notification as NSNotification).userInfo!)
-        let keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let deltaY = keyBoardBounds.size.height;
-        viewPaddingBottom = deltaY;
-        let animations:(() -> Void) = {
-            self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -deltaY)
+    @objc func keyBoardWillUIKeyboardWillChangeFrame(_ noti:Notification){
+        let screenMaxY = self.view.frame.maxY;
+
+        if let userInfo = noti.userInfo{
+            let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey]! as! NSNumber).doubleValue;
+            let keyboardEndY = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).origin.y;
+            let keyboardheight = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).height;
+          
+            if(keyboardheight != 0){
+                if(keyboardheight>self.inputBarCell.keyboardMaxHeight){
+                    self.inputBarCell.keyboardMaxHeight = keyboardheight;
+                }
+                if(keyboardheight == self.inputBarCell.keyboardMaxHeight){
+                    if(keyboardEndY == screenMaxY){
+                        self.inputBarCell.isShowKeyboard = false;
+                        self.inputBarCell.viewPaddingBottom = 0;
+                    }else{
+                        self.inputBarCell.isShowKeyboard = true;
+                        self.inputBarCell.viewPaddingBottom = keyboardheight;
+                    }
+                }
+            }else{
+                self.inputBarCell.isShowKeyboard = false;
+                self.inputBarCell.viewPaddingBottom = 0;
+            }
+            
+            if(self.inputBarCell.isShowKeyboard){
+                UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                    self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -keyboardheight)
+                }, completion: { (result) in
+                    self.textViewDidChange(self.inputBarCell.inputTextView);
+                })
+            }else{
+                UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                    self.inputBarCell!.transform = CGAffineTransform.identity;
+                }, completion: { (result) in
+                    self.textViewDidChange(self.inputBarCell.inputTextView);
+                })
+            }
+            
         }
-        if duration > 0 {
-            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-            UIView.animate(withDuration: duration, delay: 0, options:options, animations: animations, completion: nil)
-        }else{
-            animations()
-        }
-    }
-    
-    //键盘隐藏
-    func keyBoardWillHide(_ note:Notification){
-        self.isShowKeyboard = false;
-        viewPaddingBottom = 0;
-        let userInfo = NSDictionary(dictionary: (note as NSNotification).userInfo!)
-        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let animations:(() -> Void) = {
-            //还原到动画之前的状态
-            self.inputBarCell!.transform = CGAffineTransform.identity;
-        }
-        if duration > 0 {
-            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-            UIView.animate(withDuration: duration, delay: 0, options:options, animations: animations, completion: nil)
-        }else{
-            animations()
-        }
+        
     }
     
     //点击其他隐藏输入法
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true);
-        if(isShowMoreView){
+        if(self.inputBarCell.isShowMoreView){
             hideMoreView();
         }
         
@@ -211,20 +171,21 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     
     func textViewDidChange(_ textView: UITextView) {
-        if(textView.text!.characters.count != 0){
+        if(textView.text!.endIndex.encodedOffset > 0){
             self.inputBarCell!.backgroundTextView.text = "";
         }else{
             self.inputBarCell!.backgroundTextView.text = "请输入回复";
         }
         
-        var textViewHeight: CGFloat = textView.contentSize.height + 16;
+        var textViewHeight: CGFloat = textView.contentSize.height + 14;
         if(textViewHeight <= 50){
             textViewHeight = 50;
         }
         if (textViewHeight > 130) {
             textViewHeight = 130
         }
-        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - textViewHeight - self.viewPaddingBottom, width: screenWidth, height: textViewHeight);
+      
+        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - textViewHeight - self.inputBarCell.viewPaddingBottom, width: screenWidth, height: textViewHeight + 200);
         
         //滚动到TextView的底部
         let offset = textView.contentSize.height - textView.bounds.size.height;
