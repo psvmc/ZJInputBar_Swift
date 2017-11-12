@@ -34,7 +34,6 @@ class InputBarCell: UITableViewCell {
     
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
     var isShowMoreView = false;//是否显示更多的View
-    var isShowKeyboard = false;//是否显示输入法
     var keyboardMaxHeight:CGFloat = 0;
     
     override func awakeFromNib() {
@@ -90,6 +89,12 @@ class InputBarCell: UITableViewCell {
             self.midInputOutView.isHidden = false;
             self.inputTextView.becomeFirstResponder();
         case .RightAdd:
+            self.leftKeyboardButton.isHidden = true;
+            self.leftVoiceButton.isHidden = false;
+            self.midVoiceOutView.isHidden = true;
+            self.midInputOutView.isHidden = false;
+            self.rightFaceButton.isHidden = false;
+            self.rightKeyboardButton.isHidden = true;
             self.inputTextView.resignFirstResponder();
             self.talkView.isHidden = true;
             self.faceView.isHidden = true;

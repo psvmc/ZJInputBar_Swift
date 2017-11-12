@@ -49,7 +49,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     @objc func leftVoiceButtonClick(_ button:UIButton){
         self.inputBarCell.changeStyle(.LeftVoice)
         showMoreView();
-        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - 50, width: screenWidth, height: 250);
+        
     }
     
     @objc func leftKeyboardButtonClick(_ button:UIButton){
@@ -66,15 +66,18 @@ class ViewController: UIViewController,UITextViewDelegate {
     }
     
     @objc func rightAddButtonClick(_ button:UIButton){
-        self.inputBarCell.changeStyle(.RightAdd)
+       
         if(self.inputBarCell.isShowMoreView){
-            if(inputBarCell.otherView.isHidden){
+            if(self.inputBarCell.otherView.isHidden){
+                showMoreView();
             }else{
                 hideMoreView();
             }
+            
         }else{
             showMoreView();
         }
+         self.inputBarCell.changeStyle(.RightAdd)
         
     }
     
@@ -82,8 +85,8 @@ class ViewController: UIViewController,UITextViewDelegate {
     func showMoreView(){
         self.inputBarCell.isShowMoreView = true;
         self.inputBarCell.viewPaddingBottom = 200;
-        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
-            self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -200)
+        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: { () -> Void in
+            self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
         }) { (result) -> Void in
             
         }
@@ -95,8 +98,8 @@ class ViewController: UIViewController,UITextViewDelegate {
         self.inputBarCell.viewPaddingBottom = 0;
         inputBarCell.rightKeyboardButton.isHidden = true;
         inputBarCell.rightFaceButton.isHidden = false;
-        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
-            self.inputBarCell!.transform = CGAffineTransform.identity
+        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: { () -> Void in
+            self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
         }) { (result) -> Void in
             
         }
@@ -116,31 +119,20 @@ class ViewController: UIViewController,UITextViewDelegate {
                 }
                 if(keyboardheight == self.inputBarCell.keyboardMaxHeight){
                     if(keyboardEndY == screenMaxY){
-                        self.inputBarCell.isShowKeyboard = false;
                         self.inputBarCell.viewPaddingBottom = 0;
                     }else{
-                        self.inputBarCell.isShowKeyboard = true;
                         self.inputBarCell.viewPaddingBottom = keyboardheight;
                     }
                 }
             }else{
-                self.inputBarCell.isShowKeyboard = false;
                 self.inputBarCell.viewPaddingBottom = 0;
             }
-            
-            if(self.inputBarCell.isShowKeyboard){
-                UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
-                    self.inputBarCell!.transform = CGAffineTransform(translationX: 0,y: -keyboardheight)
-                }, completion: { (result) in
-                    self.textViewDidChange(self.inputBarCell.inputTextView);
-                })
-            }else{
-                UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
-                    self.inputBarCell!.transform = CGAffineTransform.identity;
-                }, completion: { (result) in
-                    self.textViewDidChange(self.inputBarCell.inputTextView);
-                })
-            }
+        
+            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
+            }, completion: { (result) in
+                self.textViewDidChange(self.inputBarCell.inputTextView);
+            })
             
         }
         
