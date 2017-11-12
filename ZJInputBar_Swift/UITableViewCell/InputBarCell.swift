@@ -33,6 +33,7 @@ class InputBarCell: UITableViewCell {
     
     
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
+    var inputBarHeight:CGFloat = 50;//上面输入条的高度
     var isShowMoreView = false;//是否显示更多的View
     var keyboardMaxHeight:CGFloat = 0;
     

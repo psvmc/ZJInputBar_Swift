@@ -74,7 +74,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqk-cO-bk9">
                                 <rect key="frame" x="40" y="8" width="205" height="34.5"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="请输入回复" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eXu-u1-r1P">
+                                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" text="请输入回复" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eXu-u1-r1P">
                                         <rect key="frame" x="5" y="0.0" width="195" height="34.5"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -85,11 +85,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     func showMoreView(){
         self.inputBarCell.isShowMoreView = true;
         self.inputBarCell.viewPaddingBottom = 200;
-        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: { () -> Void in
-            self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
-        }) { (result) -> Void in
-            
-        }
+        self.changeInputBarFrame(0);
     }
     
     //更多对应View隐藏
@@ -98,11 +94,7 @@ class ViewController: UIViewController,UITextViewDelegate {
         self.inputBarCell.viewPaddingBottom = 0;
         inputBarCell.rightKeyboardButton.isHidden = true;
         inputBarCell.rightFaceButton.isHidden = false;
-        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: { () -> Void in
-            self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
-        }) { (result) -> Void in
-            
-        }
+        self.changeInputBarFrame(0);
     }
     
     @objc func keyBoardWillUIKeyboardWillChangeFrame(_ noti:Notification){
@@ -128,11 +120,7 @@ class ViewController: UIViewController,UITextViewDelegate {
                 self.inputBarCell.viewPaddingBottom = 0;
             }
         
-            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
-                self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
-            }, completion: { (result) in
-                self.textViewDidChange(self.inputBarCell.inputTextView);
-            })
+            self.changeInputBarFrame(duration);
             
         }
         
@@ -140,10 +128,15 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     //点击其他隐藏输入法
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true);
-        if(self.inputBarCell.isShowMoreView){
-            hideMoreView();
+        for touch in touches{
+            if(touch.view != self.inputBarCell.inputTextView){
+                self.view.endEditing(true);
+                if(self.inputBarCell.isShowMoreView){
+                    hideMoreView();
+                }
+            }
         }
+        
         
     }
     
@@ -177,13 +170,28 @@ class ViewController: UIViewController,UITextViewDelegate {
             textViewHeight = 130
         }
       
-        self.inputBarCell?.frame = CGRect(x: 0, y: screenHeight - textViewHeight - self.inputBarCell.viewPaddingBottom, width: screenWidth, height: textViewHeight + 200);
+        self.inputBarCell.inputBarHeight = textViewHeight;
         
-        //滚动到TextView的底部
-        let offset = textView.contentSize.height - textView.bounds.size.height;
-        if(offset > 0){
-            textView.setContentOffset(CGPoint(x: 0, y: offset), animated: true);
+
+        self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - textViewHeight - self.inputBarCell.viewPaddingBottom, width: self.screenWidth, height: textViewHeight + 200);
+
+    }
+    
+    
+    func changeInputBarFrame(_ duration:TimeInterval){
+        if(self.inputBarCell.midInputOutView.isHidden){
+            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
+            }, completion: { (result) in
+            })
+        }else{
+            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+                self.inputBarCell?.frame = CGRect(x: 0, y: self.screenHeight - self.inputBarCell.viewPaddingBottom - self.inputBarCell.inputBarHeight, width: self.screenWidth, height: 250);
+            }, completion: { (result) in
+                self.textViewDidChange(self.inputBarCell.inputTextView);
+            })
         }
+        
     }
 }
 
