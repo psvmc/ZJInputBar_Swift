@@ -9,6 +9,7 @@
 import UIKit
 
 enum InputBarCellType{
+    case Default
     case LeftVoice
     case LeftKeybord
     case RightFace
@@ -21,6 +22,7 @@ class InputBarCell: UITableViewCell {
     @IBOutlet weak var leftVoiceButton: UIButton!
     @IBOutlet weak var backgroundTextView: UITextView!
     @IBOutlet weak var inputTextView: UITextView!
+    @IBOutlet weak var voiceHideButton: UIButton!
     @IBOutlet weak var rightKeyboardButton: UIButton!
     @IBOutlet weak var rightFaceButton: UIButton!
     @IBOutlet weak var rightAddButton: UIButton!
@@ -40,7 +42,7 @@ class InputBarCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.midInputOutView.layer.masksToBounds = true;
-        self.midInputOutView.layer.cornerRadius = 17;
+        self.midInputOutView.layer.cornerRadius = 18;
         self.midInputOutView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor;
         self.midInputOutView.layer.borderWidth = 1;
         
@@ -52,6 +54,18 @@ class InputBarCell: UITableViewCell {
     
     func changeStyle(_ style:InputBarCellType){
         switch style {
+        case .Default:
+            self.leftKeyboardButton.isHidden = true;
+            self.leftVoiceButton.isHidden = false;
+            self.rightFaceButton.isHidden = false;
+            self.rightKeyboardButton.isHidden = true;
+            self.midVoiceOutView.isHidden = true;
+            self.midInputOutView.isHidden = false;
+            self.inputTextView.resignFirstResponder();
+            
+            self.talkView.isHidden = false;
+            self.faceView.isHidden = true;
+            self.otherView.isHidden = true;
         case .LeftVoice:
             self.leftKeyboardButton.isHidden = false;
             self.leftVoiceButton.isHidden = true;
@@ -100,7 +114,7 @@ class InputBarCell: UITableViewCell {
             self.talkView.isHidden = true;
             self.faceView.isHidden = true;
             self.otherView.isHidden = false;
-        
+            
         }
     }
     
