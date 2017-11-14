@@ -12,7 +12,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     var inputBarCell:InputBarCell!;//输入的Bar
     var screenWidth:CGFloat! = UIScreen.main.bounds.width;//屏幕的宽度
-    var inputBarDefaultY:CGFloat! = UIScreen.main.bounds.height - 64;//输入框默认的最大高度
+    var inputBarDefaultY:CGFloat! = UIScreen.main.bounds.height;//输入框默认的最大高度
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     //初始化
     func initInputBar(){
         inputBarCell = Bundle.main.loadNibNamed("InputBarCell", owner: self, options: nil)?.first as! InputBarCell;
-        inputBarCell.frame = CGRect(x: 0, y: inputBarDefaultY - 50, width: screenWidth, height: 200);
+        inputBarCell.frame = CGRect(x: 0, y: inputBarDefaultY - 50, width: screenWidth, height: 250);
         
         //添加事件
         inputBarCell.leftVoiceButton.addTarget(self, action: #selector(ViewController.leftVoiceButtonClick(_:)), for: UIControlEvents.touchUpInside);
@@ -102,12 +102,11 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     @objc func keyBoardWillUIKeyboardWillChangeFrame(_ noti:Notification){
         let screenMaxY = self.view.frame.maxY;
-
         if let userInfo = noti.userInfo{
             let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey]! as! NSNumber).doubleValue;
             let keyboardEndY = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).origin.y;
             let keyboardheight = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).height;
-          
+        
             if(keyboardheight != 0){
                 if(keyboardheight>self.inputBarCell.keyboardMaxHeight){
                     self.inputBarCell.keyboardMaxHeight = keyboardheight;
@@ -122,7 +121,6 @@ class ViewController: UIViewController,UITextViewDelegate {
             }else{
                 self.inputBarCell.viewPaddingBottom = 0;
             }
-        
             self.changeInputBarFrame(duration);
             
         }
@@ -131,7 +129,6 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     //点击其他隐藏输入法
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("触控事件")
         for touch in touches{
             if(touch.view != self.inputBarCell.inputTextView){
                 self.view.endEditing(true);
@@ -140,8 +137,6 @@ class ViewController: UIViewController,UITextViewDelegate {
                 }
             }
         }
-        
-        
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -151,7 +146,6 @@ class ViewController: UIViewController,UITextViewDelegate {
             }else{
                 print("提交内容不能为空");
             }
-            
             return false;
         }else{
             return true;
@@ -181,17 +175,14 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     
     func changeInputBarFrame(_ duration:TimeInterval){
-        if(self.inputBarCell.midInputOutView.isHidden){
-            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
-                self.inputBarCell?.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
-            }, completion: { (result) in
-            })
-        }else{
-            UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
-                self.inputBarCell?.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.inputBarCell.viewPaddingBottom - self.inputBarCell.inputBarHeight, width: self.screenWidth, height: 250);
-            }, completion: { (result) in
-                self.textViewDidChange(self.inputBarCell.inputTextView);
-            })
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            self.inputBarCell?.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.inputBarCell.viewPaddingBottom - self.inputBarCell.inputBarHeight, width: self.screenWidth, height: 250);
+        }, completion: { (result) in
+            
+        })
+        
+        if(self.inputBarCell.inputBarHeight > 50){
+            self.textViewDidChange(self.inputBarCell.inputTextView);
         }
         
     }
