@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SnapKit
+
 
 enum InputBarCellType{
     case Default
@@ -33,6 +35,9 @@ class InputBarCell: UITableViewCell {
     @IBOutlet weak var faceView: UIView!
     @IBOutlet weak var otherView: UIView!
     
+    @IBOutlet weak var talkButton: UIButton!
+    
+    var recordView:AudioRecordView!
     
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
     var inputBarHeight:CGFloat = 50;//上面输入条的高度
@@ -45,11 +50,29 @@ class InputBarCell: UITableViewCell {
         self.midInputOutView.layer.cornerRadius = 18;
         self.midInputOutView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor;
         self.midInputOutView.layer.borderWidth = 1;
-        
+        initRecordView();
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func initRecordView(){
+//        recordView = AudioRecordView(frame: CGRect(x: 0, y: 0, width: 86, height: 86));
+//        talkView.addSubview(recordView);
+//        recordView.snp.makeConstraints { (make) in
+//            make.width.height.equalTo(86);
+//            make.center.equalTo(talkView);
+//        }
+        
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 86, height: 86));
+        talkView.addSubview(view);
+        view.backgroundColor = UIColor.red
+        view.snp.makeConstraints { (make) in
+            make.width.height.equalTo(86);
+            make.center.equalTo(talkView);
+        }
     }
     
     func changeStyle(_ style:InputBarCellType){

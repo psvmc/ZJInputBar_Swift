@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020DBF911FBB038100BB3E15 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF811FBB038100BB3E15 /* amrFileCodec.m */; };
+		020DBF921FBB038100BB3E15 /* AudioAmrUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF831FBB038100BB3E15 /* AudioAmrUtil.m */; };
+		020DBF931FBB038100BB3E15 /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF851FBB038100BB3E15 /* AudioManager.m */; };
+		020DBF941FBB038100BB3E15 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 020DBF8F1FBB038100BB3E15 /* libopencore-amrnb.a */; };
+		020DBF951FBB038100BB3E15 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 020DBF901FBB038100BB3E15 /* libopencore-amrwb.a */; };
+		020DBF9E1FBB040500BB3E15 /* AudioRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF981FBB040400BB3E15 /* AudioRecordView.m */; };
+		020DBF9F1FBB040500BB3E15 /* AudioVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF9A1FBB040400BB3E15 /* AudioVolumeView.m */; };
+		020DBFA01FBB040500BB3E15 /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBF9D1FBB040400BB3E15 /* UIColor+Expanded.m */; };
+		020DBFA31FBB070F00BB3E15 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBFA11FBB070F00BB3E15 /* NSString+Common.m */; };
+		29350FC61D5C9C2245FEFDD5 /* Pods_ZJInputBar_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */; };
 		3F77863C1C8D101500A50A85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77863B1C8D101500A50A85 /* AppDelegate.swift */; };
 		3F77863E1C8D101500A50A85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77863D1C8D101500A50A85 /* ViewController.swift */; };
 		3F7786411C8D101500A50A85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F77863F1C8D101500A50A85 /* Main.storyboard */; };
@@ -17,6 +27,29 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		020DBF781FBAFFEB00BB3E15 /* Swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		020DBF801FBB038100BB3E15 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
+		020DBF811FBB038100BB3E15 /* amrFileCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = amrFileCodec.m; sourceTree = "<group>"; };
+		020DBF821FBB038100BB3E15 /* AudioAmrUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioAmrUtil.h; sourceTree = "<group>"; };
+		020DBF831FBB038100BB3E15 /* AudioAmrUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioAmrUtil.m; sourceTree = "<group>"; };
+		020DBF841FBB038100BB3E15 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
+		020DBF851FBB038100BB3E15 /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
+		020DBF891FBB038100BB3E15 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
+		020DBF8A1FBB038100BB3E15 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
+		020DBF8C1FBB038100BB3E15 /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
+		020DBF8D1FBB038100BB3E15 /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
+		020DBF8F1FBB038100BB3E15 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		020DBF901FBB038100BB3E15 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		020DBF971FBB040400BB3E15 /* AudioRecordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecordView.h; sourceTree = "<group>"; };
+		020DBF981FBB040400BB3E15 /* AudioRecordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecordView.m; sourceTree = "<group>"; };
+		020DBF991FBB040400BB3E15 /* AudioVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioVolumeView.h; sourceTree = "<group>"; };
+		020DBF9A1FBB040400BB3E15 /* AudioVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioVolumeView.m; sourceTree = "<group>"; };
+		020DBF9C1FBB040400BB3E15 /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
+		020DBF9D1FBB040400BB3E15 /* UIColor+Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Expanded.m"; sourceTree = "<group>"; };
+		020DBFA11FBB070F00BB3E15 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Common.m"; sourceTree = "<group>"; };
+		020DBFA21FBB070F00BB3E15 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Common.h"; sourceTree = "<group>"; };
+		15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZJInputBar_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZJInputBar_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		3F7786381C8D101500A50A85 /* ZJInputBar_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZJInputBar_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F77863B1C8D101500A50A85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F77863D1C8D101500A50A85 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +59,7 @@
 		3F7786471C8D101600A50A85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F77864E1C8D106C00A50A85 /* InputBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarCell.swift; sourceTree = "<group>"; };
 		3F77864F1C8D106C00A50A85 /* InputBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputBarCell.xib; sourceTree = "<group>"; };
+		8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZJInputBar_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +67,138 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020DBF951FBB038100BB3E15 /* libopencore-amrwb.a in Frameworks */,
+				020DBF941FBB038100BB3E15 /* libopencore-amrnb.a in Frameworks */,
+				29350FC61D5C9C2245FEFDD5 /* Pods_ZJInputBar_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020DBF761FBAFFD900BB3E15 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF771FBAFFD900BB3E15 /* OC */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		020DBF771FBAFFD900BB3E15 /* OC */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF961FBB040400BB3E15 /* AudioView */,
+				020DBF9B1FBB040400BB3E15 /* UIColor_expanded */,
+				020DBF7F1FBB038100BB3E15 /* Audio */,
+			);
+			path = OC;
+			sourceTree = "<group>";
+		};
+		020DBF7F1FBB038100BB3E15 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				020DBFA21FBB070F00BB3E15 /* NSString+Common.h */,
+				020DBFA11FBB070F00BB3E15 /* NSString+Common.m */,
+				020DBF801FBB038100BB3E15 /* amrFileCodec.h */,
+				020DBF811FBB038100BB3E15 /* amrFileCodec.m */,
+				020DBF821FBB038100BB3E15 /* AudioAmrUtil.h */,
+				020DBF831FBB038100BB3E15 /* AudioAmrUtil.m */,
+				020DBF841FBB038100BB3E15 /* AudioManager.h */,
+				020DBF851FBB038100BB3E15 /* AudioManager.m */,
+				020DBF861FBB038100BB3E15 /* opencore-amr-iOS */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		020DBF861FBB038100BB3E15 /* opencore-amr-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF871FBB038100BB3E15 /* include */,
+				020DBF8E1FBB038100BB3E15 /* lib */,
+			);
+			path = "opencore-amr-iOS";
+			sourceTree = "<group>";
+		};
+		020DBF871FBB038100BB3E15 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF881FBB038100BB3E15 /* opencore-amrnb */,
+				020DBF8B1FBB038100BB3E15 /* opencore-amrwb */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		020DBF881FBB038100BB3E15 /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF891FBB038100BB3E15 /* interf_dec.h */,
+				020DBF8A1FBB038100BB3E15 /* interf_enc.h */,
+			);
+			path = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		020DBF8B1FBB038100BB3E15 /* opencore-amrwb */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF8C1FBB038100BB3E15 /* dec_if.h */,
+				020DBF8D1FBB038100BB3E15 /* if_rom.h */,
+			);
+			path = "opencore-amrwb";
+			sourceTree = "<group>";
+		};
+		020DBF8E1FBB038100BB3E15 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF8F1FBB038100BB3E15 /* libopencore-amrnb.a */,
+				020DBF901FBB038100BB3E15 /* libopencore-amrwb.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		020DBF961FBB040400BB3E15 /* AudioView */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF971FBB040400BB3E15 /* AudioRecordView.h */,
+				020DBF981FBB040400BB3E15 /* AudioRecordView.m */,
+				020DBF991FBB040400BB3E15 /* AudioVolumeView.h */,
+				020DBF9A1FBB040400BB3E15 /* AudioVolumeView.m */,
+			);
+			path = AudioView;
+			sourceTree = "<group>";
+		};
+		020DBF9B1FBB040400BB3E15 /* UIColor_expanded */ = {
+			isa = PBXGroup;
+			children = (
+				020DBF9C1FBB040400BB3E15 /* UIColor+Expanded.h */,
+				020DBF9D1FBB040400BB3E15 /* UIColor+Expanded.m */,
+			);
+			path = UIColor_expanded;
+			sourceTree = "<group>";
+		};
+		04259DC88CD7ED72B2CC7B4C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */,
+				8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		36904AC1D1CA57653597165F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3F77862F1C8D101500A50A85 = {
 			isa = PBXGroup;
 			children = (
 				3F77863A1C8D101500A50A85 /* ZJInputBar_Swift */,
 				3F7786391C8D101500A50A85 /* Products */,
+				04259DC88CD7ED72B2CC7B4C /* Pods */,
+				36904AC1D1CA57653597165F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +213,8 @@
 		3F77863A1C8D101500A50A85 /* ZJInputBar_Swift */ = {
 			isa = PBXGroup;
 			children = (
+				020DBF781FBAFFEB00BB3E15 /* Swift-Bridging-Header.h */,
+				020DBF761FBAFFD900BB3E15 /* Lib */,
 				3F77864D1C8D104100A50A85 /* UITableViewCell */,
 				3F77863B1C8D101500A50A85 /* AppDelegate.swift */,
 				3F77863D1C8D101500A50A85 /* ViewController.swift */,
@@ -85,9 +242,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F77864A1C8D101600A50A85 /* Build configuration list for PBXNativeTarget "ZJInputBar_Swift" */;
 			buildPhases = (
+				B7BE639CC30CA3808F07E4A6 /* [CP] Check Pods Manifest.lock */,
 				3F7786341C8D101500A50A85 /* Sources */,
 				3F7786351C8D101500A50A85 /* Frameworks */,
 				3F7786361C8D101500A50A85 /* Resources */,
+				11641399CD833819D9BF628D /* [CP] Embed Pods Frameworks */,
+				A2ED2A3B891E298E9AA6C0E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -147,14 +307,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		11641399CD833819D9BF628D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2ED2A3B891E298E9AA6C0E5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7BE639CC30CA3808F07E4A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZJInputBar_Swift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3F7786341C8D101500A50A85 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3F7786501C8D106C00A50A85 /* InputBarCell.swift in Sources */,
+				020DBF9F1FBB040500BB3E15 /* AudioVolumeView.m in Sources */,
+				020DBFA01FBB040500BB3E15 /* UIColor+Expanded.m in Sources */,
+				020DBF9E1FBB040500BB3E15 /* AudioRecordView.m in Sources */,
+				020DBFA31FBB070F00BB3E15 /* NSString+Common.m in Sources */,
+				020DBF921FBB038100BB3E15 /* AudioAmrUtil.m in Sources */,
 				3F77863E1C8D101500A50A85 /* ViewController.swift in Sources */,
 				3F77863C1C8D101500A50A85 /* AppDelegate.swift in Sources */,
+				020DBF931FBB038100BB3E15 /* AudioManager.m in Sources */,
+				020DBF911FBB038100BB3E15 /* amrFileCodec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,14 +501,23 @@
 		};
 		3F77864B1C8D101600A50A85 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ZE78BS9TBK;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ZJInputBar_Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ZJInputBar_Swift/Lib/OC/Audio/opencore-amr-iOS/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.psvmc.ZJInputBar-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)/Swift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -295,14 +525,22 @@
 		};
 		3F77864C1C8D101600A50A85 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = ZE78BS9TBK;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ZJInputBar_Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ZJInputBar_Swift/Lib/OC/Audio/opencore-amr-iOS/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.psvmc.ZJInputBar-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)/Swift-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

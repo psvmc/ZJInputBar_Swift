@@ -50,6 +50,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     @objc func leftVoiceButtonClick(_ button:UIButton){
         self.inputBarCell.changeStyle(.LeftVoice)
         showMoreView();
+        self.inputBarCell?.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.inputBarCell.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
     }
     
     @objc func voiceHideButtonClick(_ button:UIButton){
@@ -111,12 +112,11 @@ class ViewController: UIViewController,UITextViewDelegate {
                 if(keyboardheight>self.inputBarCell.keyboardMaxHeight){
                     self.inputBarCell.keyboardMaxHeight = keyboardheight;
                 }
-                if(keyboardheight == self.inputBarCell.keyboardMaxHeight){
-                    if(keyboardEndY == screenMaxY){
-                        self.inputBarCell.viewPaddingBottom = 0;
-                    }else{
-                        self.inputBarCell.viewPaddingBottom = keyboardheight;
-                    }
+                
+                if(keyboardEndY == screenMaxY){
+                    self.inputBarCell.viewPaddingBottom = 0;
+                }else{
+                    self.inputBarCell.viewPaddingBottom = keyboardheight;
                 }
             }else{
                 self.inputBarCell.viewPaddingBottom = 0;
@@ -129,14 +129,8 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     //点击其他隐藏输入法
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches{
-            if(touch.view != self.inputBarCell.inputTextView){
-                self.view.endEditing(true);
-                if(self.inputBarCell.isShowMoreView){
-                    hideMoreView();
-                }
-            }
-        }
+        hideMoreView();
+        self.inputBarCell.changeStyle(.Default)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -184,6 +178,7 @@ class ViewController: UIViewController,UITextViewDelegate {
         if(self.inputBarCell.inputBarHeight > 50){
             self.textViewDidChange(self.inputBarCell.inputTextView);
         }
+        
         
     }
 }
