@@ -24,6 +24,7 @@
 		3F7786461C8D101600A50A85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F7786441C8D101600A50A85 /* LaunchScreen.storyboard */; };
 		3F7786501C8D106C00A50A85 /* InputBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77864E1C8D106C00A50A85 /* InputBarCell.swift */; };
 		3F7786511C8D106C00A50A85 /* InputBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F77864F1C8D106C00A50A85 /* InputBarCell.xib */; };
+		3FB4F9391FBB305600B91C50 /* keyboard_voice_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB4F9381FBB305600B91C50 /* keyboard_voice_record@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		3F7786471C8D101600A50A85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F77864E1C8D106C00A50A85 /* InputBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarCell.swift; sourceTree = "<group>"; };
 		3F77864F1C8D106C00A50A85 /* InputBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputBarCell.xib; sourceTree = "<group>"; };
+		3FB4F9381FBB305600B91C50 /* keyboard_voice_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_voice_record@2x.png"; sourceTree = "<group>"; };
 		8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZJInputBar_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 		020DBF961FBB040400BB3E15 /* AudioView */ = {
 			isa = PBXGroup;
 			children = (
+				3FB4F9371FBB303F00B91C50 /* images */,
 				020DBF971FBB040400BB3E15 /* AudioRecordView.h */,
 				020DBF981FBB040400BB3E15 /* AudioRecordView.m */,
 				020DBF991FBB040400BB3E15 /* AudioVolumeView.h */,
@@ -235,6 +238,14 @@
 			path = UITableViewCell;
 			sourceTree = "<group>";
 		};
+		3FB4F9371FBB303F00B91C50 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				3FB4F9381FBB305600B91C50 /* keyboard_voice_record@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,6 +312,7 @@
 				3F7786461C8D101600A50A85 /* LaunchScreen.storyboard in Resources */,
 				3F7786431C8D101600A50A85 /* Assets.xcassets in Resources */,
 				3F7786511C8D106C00A50A85 /* InputBarCell.xib in Resources */,
+				3FB4F9391FBB305600B91C50 /* keyboard_voice_record@2x.png in Resources */,
 				3F7786411C8D101500A50A85 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,7 +368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

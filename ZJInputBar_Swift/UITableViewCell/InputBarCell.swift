@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 
 enum InputBarCellType{
@@ -19,7 +18,7 @@ enum InputBarCellType{
     case RightAdd
 }
 
-class InputBarCell: UITableViewCell {
+class InputBarCell: UITableViewCell,AudioRecordViewDelegate {
     @IBOutlet weak var leftKeyboardButton: UIButton!
     @IBOutlet weak var leftVoiceButton: UIButton!
     @IBOutlet weak var backgroundTextView: UITextView!
@@ -35,9 +34,11 @@ class InputBarCell: UITableViewCell {
     @IBOutlet weak var faceView: UIView!
     @IBOutlet weak var otherView: UIView!
     
-    @IBOutlet weak var talkButton: UIButton!
+    @IBOutlet weak var recordView: AudioRecordView!
+    var chatVoiceState:ChatVoiceState! = .ready;
+    var duration = 0;//录音的时长（秒）
+    var timer:Timer!;
     
-    var recordView:AudioRecordView!
     
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
     var inputBarHeight:CGFloat = 50;//上面输入条的高度
@@ -50,30 +51,14 @@ class InputBarCell: UITableViewCell {
         self.midInputOutView.layer.cornerRadius = 18;
         self.midInputOutView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor;
         self.midInputOutView.layer.borderWidth = 1;
-        initRecordView();
+        
+        recordView.delegate = self;
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func initRecordView(){
-//        recordView = AudioRecordView(frame: CGRect(x: 0, y: 0, width: 86, height: 86));
-//        talkView.addSubview(recordView);
-//        recordView.snp.makeConstraints { (make) in
-//            make.width.height.equalTo(86);
-//            make.center.equalTo(talkView);
-//        }
-        
-        
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 86, height: 86));
-        talkView.addSubview(view);
-        view.backgroundColor = UIColor.red
-        view.snp.makeConstraints { (make) in
-            make.width.height.equalTo(86);
-            make.center.equalTo(talkView);
-        }
-    }
     
     func changeStyle(_ style:InputBarCellType){
         switch style {
@@ -139,6 +124,41 @@ class InputBarCell: UITableViewCell {
             self.otherView.isHidden = false;
             
         }
+    }
+    
+    func startTimer()  {
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(increaseRecordTime), userInfo: nil, repeats: true);
+    }
+    
+    func stopTimer(){
+        if(self.timer != nil){
+            self.timer.invalidate();
+            self.timer = nil;
+        }
+    }
+    
+    func updateVoiceState(_ state:ChatVoiceState){
+        switch state {
+        case .ready:
+            break;
+        case .recording:
+            break;
+        case .cancel:
+            break;
+            
+        }
+    }
+    
+    @objc func increaseRecordTime(){
+        duration = duration + 1;
+        if(self.chatVoiceState == ChatVoiceState.recording){
+            
+        }
+    }
+    
+    //AudioRecordViewDelegate
+    func recordViewRecordStarted(_ recordView: AudioRecordView!) {
+        self.chatVoiceState = ChatVoiceState.recording;
     }
     
 }

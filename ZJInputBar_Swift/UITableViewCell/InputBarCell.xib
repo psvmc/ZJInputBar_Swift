@@ -172,7 +172,37 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vnG-2c-DYX">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="按住说话" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVY-pM-8xB">
+                                        <rect key="frame" x="128" y="10" width="65.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpk-Jj-LGn" customClass="AudioRecordView">
+                                        <rect key="frame" x="117" y="56.5" width="86" height="86"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="86" id="Ikp-LZ-Uo3"/>
+                                            <constraint firstAttribute="width" constant="86" id="NEp-rm-jaF"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="向上滑动取消发送" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygs-a8-2dL">
+                                        <rect key="frame" x="111.5" y="175.5" width="98.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.98707991839999998" green="0.99998170139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Ygs-a8-2dL" secondAttribute="bottom" constant="10" id="1nM-aL-keT"/>
+                                    <constraint firstItem="hVY-pM-8xB" firstAttribute="top" secondItem="vnG-2c-DYX" secondAttribute="top" constant="10" id="FnK-HR-yFc"/>
+                                    <constraint firstItem="gpk-Jj-LGn" firstAttribute="centerY" secondItem="vnG-2c-DYX" secondAttribute="centerY" id="T9p-bP-EI9"/>
+                                    <constraint firstItem="gpk-Jj-LGn" firstAttribute="centerX" secondItem="vnG-2c-DYX" secondAttribute="centerX" id="XfT-so-eBo"/>
+                                    <constraint firstItem="Ygs-a8-2dL" firstAttribute="centerX" secondItem="vnG-2c-DYX" secondAttribute="centerX" id="uyP-zG-tUh"/>
+                                    <constraint firstItem="hVY-pM-8xB" firstAttribute="centerX" secondItem="vnG-2c-DYX" secondAttribute="centerX" id="zHv-4e-UuA"/>
+                                </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jrg-Be-BRe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
@@ -263,6 +293,7 @@
                 <outlet property="midInputOutView" destination="cqk-cO-bk9" id="amL-jK-Ao2"/>
                 <outlet property="midVoiceOutView" destination="zgi-Zn-XWm" id="PAV-sQ-jN4"/>
                 <outlet property="otherView" destination="flG-gS-Rfk" id="86O-FW-X5O"/>
+                <outlet property="recordView" destination="gpk-Jj-LGn" id="mUn-YW-r6P"/>
                 <outlet property="rightAddButton" destination="qIk-Qb-w9g" id="dfl-D7-9Zx"/>
                 <outlet property="rightFaceButton" destination="gBH-OJ-6c1" id="RI7-5M-Umg"/>
                 <outlet property="rightKeyboardButton" destination="52O-Fj-vzU" id="WAY-2k-dvE"/>

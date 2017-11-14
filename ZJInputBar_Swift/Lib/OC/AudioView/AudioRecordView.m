@@ -24,39 +24,52 @@
 
 @implementation AudioRecordView
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self initStyle];
+    }
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _isRecording = NO;
-        
-        _spreadView = [[UIView alloc] initWithFrame:CGRectMake(-8, -8, self.frame.size.width+16, self.frame.size.height+16)];
-        _spreadView.backgroundColor = [UIColor colorWithRGBHex:0xC6ECFD];
-        _spreadView.layer.cornerRadius = _spreadView.frame.size.width/2;
-        _spreadView.alpha = 0;
-        [self addSubview:_spreadView];
-        
-        _recordBgView = [[UIView alloc] initWithFrame:CGRectMake(-8, -8, self.frame.size.width+16, self.frame.size.height+16)];
-        _recordBgView.backgroundColor = [UIColor colorWithRGBHex:0x7ACFFB];
-        _recordBgView.layer.cornerRadius = _recordBgView.frame.size.width/2;
-        _recordBgView.hidden = YES;
-        [self addSubview:_recordBgView];
-        
-        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _imageView.image = [UIImage imageNamed:@"keyboard_voice_record"];
-        [self addSubview:_imageView];
-        
-        _flashView = [[UIView alloc] initWithFrame:self.bounds];
-        _flashView.backgroundColor = [UIColor whiteColor];
-        _flashView.layer.cornerRadius = _flashView.frame.size.width/2;
-        _flashView.alpha = 0;
-        [self addSubview:_flashView];
-        
-        [self addTarget:self action:@selector(onTouchDown:) forControlEvents:UIControlEventTouchDown];
-        [self addTarget:self action:@selector(onTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        [self addTarget:self action:@selector(onTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+        [self initStyle];
     }
     return self;
+}
+
+- (void)initStyle{
+    _isRecording = NO;
+    
+    _spreadView = [[UIView alloc] initWithFrame:CGRectMake(-8, -8, self.frame.size.width+16, self.frame.size.height+16)];
+    _spreadView.backgroundColor = [UIColor colorWithRGBHex:0xC6ECFD];
+    _spreadView.layer.cornerRadius = _spreadView.frame.size.width/2;
+    _spreadView.alpha = 0;
+    [self addSubview:_spreadView];
+    
+    _recordBgView = [[UIView alloc] initWithFrame:CGRectMake(-8, -8, self.frame.size.width+16, self.frame.size.height+16)];
+    _recordBgView.backgroundColor = [UIColor colorWithRGBHex:0x7ACFFB];
+    _recordBgView.layer.cornerRadius = _recordBgView.frame.size.width/2;
+    _recordBgView.hidden = YES;
+    [self addSubview:_recordBgView];
+    
+    _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.image = [UIImage imageNamed:@"keyboard_voice_record"];
+    [self addSubview:_imageView];
+    
+    _flashView = [[UIView alloc] initWithFrame:self.bounds];
+    _flashView.backgroundColor = [UIColor whiteColor];
+    _flashView.layer.cornerRadius = _flashView.frame.size.width/2;
+    _flashView.alpha = 0;
+    [self addSubview:_flashView];
+    
+    [self addTarget:self action:@selector(onTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [self addTarget:self action:@selector(onTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:self action:@selector(onTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)dealloc {

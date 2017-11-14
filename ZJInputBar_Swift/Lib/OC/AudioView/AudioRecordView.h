@@ -5,6 +5,13 @@ typedef NS_ENUM(NSInteger, AudioRecordViewTouchState) {
     AudioRecordViewTouchStateOutside
 };
 
+
+typedef NS_ENUM(NSInteger,ChatVoiceState) {
+    ChatVoiceStateReady,
+    ChatVoiceStateRecording,
+    ChatVoiceStateCancel
+};
+
 @protocol AudioRecordViewDelegate;
 
 @interface AudioRecordView : UIControl
