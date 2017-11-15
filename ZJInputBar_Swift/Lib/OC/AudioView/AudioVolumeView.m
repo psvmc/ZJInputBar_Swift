@@ -18,24 +18,37 @@
 
 @implementation AudioVolumeView
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self initStyle];
+    }
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _volumes = [[NSMutableArray alloc] initWithCapacity:kAudioVolumeViewVolumeNumber];
-        _volumeViews = [[NSMutableArray alloc] initWithCapacity:kAudioVolumeViewVolumeNumber];
-        for (int i = 0; i < kAudioVolumeViewVolumeNumber; i++) {
-            [_volumes addObject:@0];
-            
-            UIView *volumeView = [[UIView alloc] initWithFrame:CGRectMake((kAudioVolumeViewVolumeWidth+kAudioVolumeViewVolumePadding)*i, (self.frame.size.height-kAudioVolumeViewVolumeMinHeight)/2, kAudioVolumeViewVolumeWidth, kAudioVolumeViewVolumeMinHeight)];
-            volumeView.backgroundColor = [UIColor colorWithRGBHex:0xfb8638];
-            volumeView.layer.cornerRadius = volumeView.frame.size.width/2;
-            [self addSubview:volumeView];
-            [_volumeViews addObject:volumeView];
-        }
-        
-        self.type = AudioVolumeViewTypeLeft;
+        [self initStyle];
     }
     return self;
+}
+
+-(void)initStyle{
+    _volumes = [[NSMutableArray alloc] initWithCapacity:kAudioVolumeViewVolumeNumber];
+    _volumeViews = [[NSMutableArray alloc] initWithCapacity:kAudioVolumeViewVolumeNumber];
+    for (int i = 0; i < kAudioVolumeViewVolumeNumber; i++) {
+        [_volumes addObject:@0];
+        
+        UIView *volumeView = [[UIView alloc] initWithFrame:CGRectMake((kAudioVolumeViewVolumeWidth+kAudioVolumeViewVolumePadding)*i, (self.frame.size.height-kAudioVolumeViewVolumeMinHeight)/2, kAudioVolumeViewVolumeWidth, kAudioVolumeViewVolumeMinHeight)];
+        volumeView.backgroundColor = [UIColor colorWithRGBHex:0xfb8638];
+        volumeView.layer.cornerRadius = volumeView.frame.size.width/2;
+        [self addSubview:volumeView];
+        [_volumeViews addObject:volumeView];
+    }
+    
+    self.type = AudioVolumeViewTypeLeft;
 }
 
 - (void)addVolume:(double)volume {
@@ -63,14 +76,15 @@
         UIView *volumeView = _volumeViews[i];
         NSNumber *volume = _volumes[i];
         CGRect frame = volumeView.frame;
-        frame.size.height = volume.doubleValue;
+        frame.size.height = [self heightOfVolume:volume.doubleValue];
         volumeView.frame = frame;
         volumeView.center = CGPointMake(volumeView.center.x, self.frame.size.height/2);
     }
 }
 
 - (CGFloat)heightOfVolume:(double)volume {
-    return kAudioVolumeViewVolumeMinHeight + (kAudioVolumeViewVolumeMaxHeight - kAudioVolumeViewVolumeMinHeight) * volume;
+    CGFloat height = kAudioVolumeViewVolumeMinHeight + (kAudioVolumeViewVolumeMaxHeight - kAudioVolumeViewVolumeMinHeight) * volume;
+    return height;
 }
 
 @end

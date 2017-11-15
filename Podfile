@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'ZJInputBar_Swift' do
 	pod 'SnapKit', '~> 4.0.0'
+    pod 'SDWebImage', '~> 4.0'
 end
 
 post_install do |installer|

@@ -12,7 +12,7 @@ class ViewController: UIViewController,UITextViewDelegate {
     
     var inputBarCell:InputBarCell!;//输入的Bar
     var screenWidth:CGFloat! = UIScreen.main.bounds.width;//屏幕的宽度
-    var inputBarDefaultY:CGFloat! = UIScreen.main.bounds.height;//输入框默认的最大高度
+    var inputBarDefaultY:CGFloat! = UIScreen.main.bounds.height+1;//输入框默认的最大高度
     
     override func viewDidLoad() {
         super.viewDidLoad()
