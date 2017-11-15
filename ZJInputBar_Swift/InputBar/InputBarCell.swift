@@ -264,7 +264,14 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         let itemdata = faceColldata[indexPath.row];
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollCell", for: indexPath) as! FaceCollCell;
         //cell.faceImageView.image = UIImage(named:itemdata["image"]!)
-        cell.faceImageView.sd_setImage(with: URL(string:itemdata["image"]!), completed: nil);
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let image = UIImage(named:itemdata["image"]!);
+            DispatchQueue.main.async {
+                cell.faceImageView.image = image;
+            }
+        }
+        
         return  cell;
     }
     

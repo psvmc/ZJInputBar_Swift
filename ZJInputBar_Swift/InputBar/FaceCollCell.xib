@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEV-0b-REg">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="d_aini.png" translatesAutoresizingMaskIntoConstraints="NO" id="7zW-XS-TXg">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7zW-XS-TXg">
                                 <rect key="frame" x="9" y="9" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="mhT-wp-U23"/>
@@ -48,7 +48,4 @@
             </connections>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="d_aini.png" width="32" height="32"/>
-    </resources>
 </document>
