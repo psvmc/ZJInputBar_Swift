@@ -408,7 +408,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             updateInputTextView();
             return false;
         }
-        return true;
+ 
     }
     
     func updateInputTextView(){
