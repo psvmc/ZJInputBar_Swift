@@ -382,12 +382,29 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             return false;
         }else if(text == ""){
             //点击了删除键
+            if(!self.inputText.isEmpty){
+                if(self.inputText.hasSuffix("]")){
+                    var tempText = String(self.inputText.reversed());
+                    if let range = tempText.range(
+                        of: "\\[[^\\[^\\]]+\\]",
+                        options: NSString.CompareOptions.regularExpression,
+                        range: nil,
+                        locale: nil){
+                        tempText = tempText.replacingCharacters(in: range, with: "")
+                        self.inputText = String(tempText.reversed());
+                    }else{
+                        self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
+                    }
+                }else{
+                    self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
+                }
+                 updateInputTextView();
+            }
             
-            updateInputTextView();
             return false;
         }else{
             //有文字新增
-            self.inputText = self.inputText + text;
+            self.inputText.append(text);
             
             updateInputTextView();
         }

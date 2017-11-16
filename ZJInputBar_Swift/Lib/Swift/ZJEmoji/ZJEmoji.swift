@@ -76,7 +76,11 @@ class ZJEmoji{
    
         var tempMessage = message;
         
-        let strAttr = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)];
+        let strAttr = [
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14),
+            NSAttributedStringKey.foregroundColor:UIColor.darkText,
+            NSAttributedStringKey.baselineOffset:3
+            ] as [NSAttributedStringKey : Any];
         
         
         //判断当前字符串是否还有表情的标志。

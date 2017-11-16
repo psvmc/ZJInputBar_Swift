@@ -12,6 +12,6 @@ class ZJTextAttachment:NSTextAttachment{
     var originalStr:String = "";
     
     override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-        return CGRect(x: 0, y: -3, width: 20, height: 20);
+        return CGRect(x: 0, y: -3, width: 18, height: 18);
     }
 }
