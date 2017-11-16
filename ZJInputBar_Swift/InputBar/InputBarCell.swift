@@ -19,7 +19,13 @@ enum InputBarCellType{
     case RightAdd
 }
 
-class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+public protocol InputBarCellDelegate : NSObjectProtocol{
+    func inputBarCellSendText(text:String);
+    func inputBarCellSendVoice(file: String!, duration: TimeInterval);
+}
+
+class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate {
+    var delegate:InputBarCellDelegate?;
     @IBOutlet weak var leftKeyboardButton: UIButton!
     @IBOutlet weak var leftVoiceButton: UIButton!
     @IBOutlet weak var backgroundTextView: UITextView!
@@ -35,10 +41,13 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     @IBOutlet weak var faceView: UIView!
     @IBOutlet weak var otherView: UIView!
     
+    var inputText:String! = "";
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
     var inputBarHeight:CGFloat = 50;//上面输入条的高度
     var isShowMoreView = false;//是否显示更多的View
     var keyboardMaxHeight:CGFloat = 0;
+    var screenWidth:CGFloat! = UIScreen.main.bounds.width;//屏幕的宽度
+    var inputBarDefaultY:CGFloat! = UIScreen.main.bounds.height+1;//输入框默认的最大高度
     
     
     var chatVoiceState:ChatVoiceState! = .ready;
@@ -66,7 +75,32 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         leftAudioVolume.type = .left;
         rightAudioVolume.type = .right;
         self.updateVoiceState(.ready);
+        self.inputTextView.returnKeyType = .send;
+    
         initFaceCollView();
+        addEvent();
+    }
+    
+    func initFrame (){
+        self.frame = CGRect(x: 0, y: inputBarDefaultY - 50, width: screenWidth, height: 250);
+    }
+    
+    func restoreDefault(){
+        self.hideMoreView();
+        self.changeStyle(.Default)
+    }
+    
+    func addEvent(){
+        //添加事件
+        self.leftVoiceButton.addTarget(self, action: #selector(InputBarCell.leftVoiceButtonClick(_:)), for: UIControlEvents.touchUpInside);
+        self.voiceHideButton.addTarget(self, action: #selector(InputBarCell.voiceHideButtonClick(_:)), for: UIControlEvents.touchUpInside);
+        self.leftKeyboardButton.addTarget(self, action: #selector(InputBarCell.leftKeyboardButtonClick(_:)), for: UIControlEvents.touchUpInside);
+        self.rightFaceButton.addTarget(self, action: #selector(InputBarCell.rightFaceButtonClick(_:)), for: UIControlEvents.touchUpInside);
+        self.rightKeyboardButton.addTarget(self, action: #selector(InputBarCell.rightKeyboardButtonClick(_:)), for: UIControlEvents.touchUpInside);
+        self.rightAddButton.addTarget(self, action: #selector(InputBarCell.rightAddButtonClick(_:)), for: UIControlEvents.touchUpInside)
+        self.inputTextView.returnKeyType = UIReturnKeyType.done;
+        self.inputTextView.delegate = self;
+        self.inputTextView.alwaysBounceVertical = false;
     }
     
     func initFaceData(){
@@ -106,8 +140,6 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             self.rightKeyboardButton.isHidden = true;
             self.midVoiceOutView.isHidden = true;
             self.midInputOutView.isHidden = false;
-            self.inputTextView.resignFirstResponder();
-            
             self.talkView.isHidden = false;
             self.faceView.isHidden = true;
             self.otherView.isHidden = true;
@@ -225,6 +257,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             }catch{
                 
             }
+        }else{
+            self.delegate?.inputBarCellSendVoice(file: file, duration: duration);
         }
         self.updateVoiceState(.ready);
         self.duration = 0;
@@ -251,6 +285,158 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         duration = 0;
     }
     
+
+    
+    
+    
+    @objc func leftVoiceButtonClick(_ button:UIButton){
+        self.changeStyle(.LeftVoice)
+        showMoreView();
+        self.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
+    }
+    
+    @objc func voiceHideButtonClick(_ button:UIButton){
+        self.changeStyle(.Default)
+        hideMoreView();
+    }
+    
+    @objc func leftKeyboardButtonClick(_ button:UIButton){
+        self.changeStyle(.LeftKeybord)
+    }
+    
+    @objc func rightFaceButtonClick(_ button:UIButton){
+        self.changeStyle(.RightFace)
+        showMoreView();
+    }
+    
+    @objc func rightKeyboardButtonClick(_ button:UIButton){
+        self.changeStyle(.RightKeybord)
+    }
+    
+    @objc func rightAddButtonClick(_ button:UIButton){
+        if(self.isShowMoreView){
+            if(self.otherView.isHidden){
+                showMoreView();
+            }else{
+                hideMoreView();
+            }
+        }else{
+            showMoreView();
+        }
+        self.changeStyle(.RightAdd)
+        
+    }
+    
+    //更多对应View显示
+    func showMoreView(){
+        self.isShowMoreView = true;
+        self.viewPaddingBottom = 200;
+        self.changeInputBarFrame(0);
+    }
+    
+    //更多对应View隐藏
+    func hideMoreView(){
+        self.isShowMoreView = false;
+        self.viewPaddingBottom = 0;
+        self.rightKeyboardButton.isHidden = true;
+        self.rightFaceButton.isHidden = false;
+        self.changeInputBarFrame(0);
+    }
+    
+    @objc func keyBoardWillUIKeyboardWillChangeFrame(_ noti:Notification){
+        let screenMaxY = UIScreen.main.bounds.height;
+        if let userInfo = noti.userInfo{
+            let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey]! as! NSNumber).doubleValue;
+            let keyboardEndY = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).origin.y;
+            let keyboardheight = (userInfo[UIKeyboardFrameEndUserInfoKey]! as! CGRect).height;
+            
+            if(keyboardheight != 0){
+                if(keyboardheight>self.keyboardMaxHeight){
+                    self.keyboardMaxHeight = keyboardheight;
+                }
+                
+                if(keyboardEndY == screenMaxY){
+                    self.viewPaddingBottom = 0;
+                }else{
+                    self.viewPaddingBottom = keyboardheight;
+                }
+            }else{
+                self.viewPaddingBottom = 0;
+            }
+            self.changeInputBarFrame(duration);
+            
+        }
+        
+    }
+    
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print("range:\(range)")
+        print("text:\(text)")
+        let length = range.length;
+        if(text == "\n"){
+            //点击了发送键
+            if(!self.inputText.isEmpty){
+                delegate?.inputBarCellSendText(text:self.inputText);
+            }
+            return false;
+        }else if(text == ""){
+            //点击了删除键
+            
+            updateInputTextView();
+            return false;
+        }else{
+            //有文字新增
+            self.inputText = self.inputText + text;
+            
+            updateInputTextView();
+        }
+        return true;
+    }
+    
+    func updateInputTextView(){
+        self.inputTextView.attributedText = ZJEmoji.getAttributedText(self.inputText);
+
+        if(self.inputText.endIndex.encodedOffset > 0){
+            self.backgroundTextView.text = "";
+        }else{
+            self.backgroundTextView.text = "请输入回复";
+        }
+        
+        let textViewSize = self.inputTextView.sizeThatFits(CGSize(width:self.inputTextView.frame.width,height:CGFloat(MAXFLOAT)));
+        var textViewHeight: CGFloat = textViewSize.height + 16;
+        if(textViewHeight <= 50){
+            textViewHeight = 50;
+        }
+        if (textViewHeight > 130) {
+            textViewHeight = 130
+        }
+        
+        self.inputBarHeight = textViewHeight;
+        self.frame = CGRect(x: 0, y: self.inputBarDefaultY - textViewHeight - self.viewPaddingBottom, width: self.screenWidth, height: textViewHeight + 200);
+    }
+    
+    func changeInputBarFrame(_ duration:TimeInterval){
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            self.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.viewPaddingBottom - self.inputBarHeight, width: self.screenWidth, height: 250);
+        }, completion: { (result) in
+            
+        })
+        
+        if(self.inputBarHeight > 50){
+            self.updateInputTextView();
+        }
+    }
+    
+    
+    func viewWillAppear() {
+        NotificationCenter.default.addObserver(self, selector:#selector(InputBarCell.keyBoardWillUIKeyboardWillChangeFrame(_:)), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    func viewWillDisappear()  {
+        NotificationCenter.default.removeObserver(self);
+    }
+    
     //CollectionView Delegate
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
@@ -263,8 +449,6 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let itemdata = faceColldata[indexPath.row];
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollCell", for: indexPath) as! FaceCollCell;
-        //cell.faceImageView.image = UIImage(named:itemdata["image"]!)
-        
         DispatchQueue.global(qos: .userInitiated).async {
             let image = UIImage(named:itemdata["image"]!);
             DispatchQueue.main.async {
@@ -280,7 +464,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let itemdata = faceColldata[indexPath.row];
+        self.inputText = self.inputText + itemdata["text"]!;
+        updateInputTextView();
     }
-    
 }

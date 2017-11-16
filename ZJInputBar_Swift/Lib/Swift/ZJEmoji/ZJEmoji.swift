@@ -73,7 +73,10 @@ class ZJEmoji{
     static func getAttributedText(_ message:String) -> NSMutableAttributedString{
         var isContain:Bool = true;
         let mutableAttributedString = NSMutableAttributedString();
+   
         var tempMessage = message;
+        
+        let strAttr = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)];
         
         
         //判断当前字符串是否还有表情的标志。
@@ -96,8 +99,9 @@ class ZJEmoji{
                 let imageUrl = emojiMap[midStr];
                 //能找到图片资源
                 if(imageUrl != nil){
+                    
                     mutableAttributedString.insert(
-                        NSAttributedString(string: leftStr),
+                        NSAttributedString(string: leftStr, attributes: strAttr),
                         at: mutableAttributedString.string.endIndex.encodedOffset
                     );
                     
@@ -110,14 +114,14 @@ class ZJEmoji{
                     );
                 }else{
                     mutableAttributedString.insert(
-                        NSAttributedString(string: leftStr + midStr),
+                        NSAttributedString(string: leftStr + midStr, attributes: strAttr),
                         at: mutableAttributedString.string.endIndex.encodedOffset
                     )
                 }
                 
             }else{
                 mutableAttributedString.insert(
-                    NSAttributedString(string: tempMessage),
+                    NSAttributedString(string: tempMessage, attributes: strAttr),
                     at: mutableAttributedString.string.endIndex.encodedOffset
                 )
                 isContain = false;
@@ -126,6 +130,4 @@ class ZJEmoji{
         
         return mutableAttributedString;
     }
-    
-    
 }
