@@ -405,8 +405,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         }else{
             //有文字新增
             self.inputText.append(text);
-            
             updateInputTextView();
+            return false;
         }
         return true;
     }
