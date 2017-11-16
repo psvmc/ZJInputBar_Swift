@@ -76,10 +76,27 @@ class ZJEmoji{
    
         var tempMessage = message;
         
+        let paragraphStyle = NSMutableParagraphStyle();
+        //行间距
+        paragraphStyle.lineSpacing = 5;
+        //段落间距
+        paragraphStyle.paragraphSpacing = 10;
+        //对齐方式
+        paragraphStyle.alignment = NSTextAlignment.left;
+        //指定段落开始的缩进像素
+        paragraphStyle.firstLineHeadIndent = 4;
+        //调整全部文字的缩进像素
+        paragraphStyle.headIndent = 4;
+        
         let strAttr = [
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14),
-            NSAttributedStringKey.foregroundColor:UIColor.darkText,
-            NSAttributedStringKey.baselineOffset:3
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16),
+            NSAttributedStringKey.foregroundColor:UIColor.darkGray,
+            NSAttributedStringKey.baselineOffset:0,
+            NSAttributedStringKey.backgroundColor:UIColor.clear,
+            NSAttributedStringKey.kern:1,
+            NSAttributedStringKey.paragraphStyle:paragraphStyle,
+            NSAttributedStringKey.obliqueness:0,
+            NSAttributedStringKey.expansion:0
             ] as [NSAttributedStringKey : Any];
         
         
@@ -105,33 +122,39 @@ class ZJEmoji{
                 if(imageUrl != nil){
                     
                     mutableAttributedString.insert(
-                        NSAttributedString(string: leftStr, attributes: strAttr),
+                        NSAttributedString(string: leftStr),
                         at: mutableAttributedString.string.endIndex.encodedOffset
                     );
                     
+                    
+                    
                     let textAttachment = ZJTextAttachment();
                     textAttachment.image = UIImage(named: imageUrl!);
+                    
                     let attributedString = NSAttributedString(attachment: textAttachment);
+                    
                     mutableAttributedString.insert(
                         attributedString,
                         at: mutableAttributedString.string.endIndex.encodedOffset
                     );
                 }else{
                     mutableAttributedString.insert(
-                        NSAttributedString(string: leftStr + midStr, attributes: strAttr),
+                        NSAttributedString(string: leftStr + midStr),
                         at: mutableAttributedString.string.endIndex.encodedOffset
                     )
                 }
                 
             }else{
                 mutableAttributedString.insert(
-                    NSAttributedString(string: tempMessage, attributes: strAttr),
+                    NSAttributedString(string: tempMessage),
                     at: mutableAttributedString.string.endIndex.encodedOffset
                 )
                 isContain = false;
             }
         }
         
+        
+        mutableAttributedString.addAttributes(strAttr, range: NSRange(location: 0, length: mutableAttributedString.length));
         return mutableAttributedString;
     }
 }

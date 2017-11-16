@@ -89,6 +89,8 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Krc-dL-NaF">
                                         <rect key="frame" x="5" y="0.0" width="195" height="36.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
                                     </textView>
                                 </subviews>
@@ -375,6 +377,7 @@
                 <outlet property="backgroundTextView" destination="eXu-u1-r1P" id="lBM-Rd-A3L"/>
                 <outlet property="chatVoiceLabel" destination="hVY-pM-8xB" id="18n-hU-QCw"/>
                 <outlet property="faceCollectionView" destination="Utn-on-DfP" id="sHP-OK-IAj"/>
+                <outlet property="faceSendButton" destination="Lm0-8G-Lfg" id="ifh-dR-FCI"/>
                 <outlet property="faceView" destination="Jrg-Be-BRe" id="PGC-dn-3Yx"/>
                 <outlet property="inputTextView" destination="Krc-dL-NaF" id="JkN-HT-Oby"/>
                 <outlet property="leftAudioVolume" destination="gKH-6F-HRc" id="8W2-y5-aJN"/>

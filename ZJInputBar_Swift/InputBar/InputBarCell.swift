@@ -40,6 +40,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     @IBOutlet weak var talkView: UIView!
     @IBOutlet weak var faceView: UIView!
     @IBOutlet weak var otherView: UIView!
+    @IBOutlet weak var faceSendButton: UIButton!
     
     var inputText:String! = "";
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
@@ -98,6 +99,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         self.rightFaceButton.addTarget(self, action: #selector(InputBarCell.rightFaceButtonClick(_:)), for: UIControlEvents.touchUpInside);
         self.rightKeyboardButton.addTarget(self, action: #selector(InputBarCell.rightKeyboardButtonClick(_:)), for: UIControlEvents.touchUpInside);
         self.rightAddButton.addTarget(self, action: #selector(InputBarCell.rightAddButtonClick(_:)), for: UIControlEvents.touchUpInside)
+        
+        self.faceSendButton.addTarget(self, action: #selector(InputBarCell.faceSendButtonClick(_:)), for: UIControlEvents.touchUpInside)
         self.inputTextView.returnKeyType = UIReturnKeyType.done;
         self.inputTextView.delegate = self;
         self.inputTextView.alwaysBounceVertical = false;
@@ -324,7 +327,13 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             showMoreView();
         }
         self.changeStyle(.RightAdd)
-        
+    }
+    
+    
+    @objc func faceSendButtonClick(_ button:UIButton){
+        if(!self.inputText.isEmpty){
+            delegate?.inputBarCellSendText(text:self.inputText);
+        }
     }
     
     //更多对应View显示
@@ -371,9 +380,9 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        print("range:\(range)")
-        print("text:\(text)")
-        let length = range.length;
+        //print("range:\(range)")
+        //print("text:\(text)")
+        //let length = range.length;
         if(text == "\n"){
             //点击了发送键
             if(!self.inputText.isEmpty){
@@ -385,12 +394,14 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             if(!self.inputText.isEmpty){
                 if(self.inputText.hasSuffix("]")){
                     var tempText = String(self.inputText.reversed());
+                    //print("tempText\(tempText)");
                     if let range = tempText.range(
-                        of: "\\[[^\\[^\\]]+\\]",
+                        of: "\\][^\\[^\\]]+\\[",
                         options: NSString.CompareOptions.regularExpression,
                         range: nil,
                         locale: nil){
                         tempText = tempText.replacingCharacters(in: range, with: "")
+                        //print("tempText\(tempText)");
                         self.inputText = String(tempText.reversed());
                     }else{
                         self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
@@ -409,6 +420,10 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             return false;
         }
  
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        self.changeStyle(.Default)
     }
     
     func updateInputTextView(){
