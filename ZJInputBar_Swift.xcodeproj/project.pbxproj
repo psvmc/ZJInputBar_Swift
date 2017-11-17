@@ -88,7 +88,6 @@
 		020DBFA31FBB070F00BB3E15 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 020DBFA11FBB070F00BB3E15 /* NSString+Common.m */; };
 		0260CCF81FBD274E0031E27E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260CCF61FBD274E0031E27E /* ChatViewController.swift */; };
 		0260CCF91FBD274E0031E27E /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0260CCF71FBD274E0031E27E /* ChatViewController.xib */; };
-		29350FC61D5C9C2245FEFDD5 /* Pods_ZJInputBar_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */; };
 		3F77863C1C8D101500A50A85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77863B1C8D101500A50A85 /* AppDelegate.swift */; };
 		3F77863E1C8D101500A50A85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77863D1C8D101500A50A85 /* ViewController.swift */; };
 		3F7786411C8D101500A50A85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F77863F1C8D101500A50A85 /* Main.storyboard */; };
@@ -193,8 +192,6 @@
 		020DBFA21FBB070F00BB3E15 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Common.h"; sourceTree = "<group>"; };
 		0260CCF61FBD274E0031E27E /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		0260CCF71FBD274E0031E27E /* ChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
-		15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZJInputBar_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZJInputBar_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		3F7786381C8D101500A50A85 /* ZJInputBar_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZJInputBar_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F77863B1C8D101500A50A85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F77863D1C8D101500A50A85 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -205,7 +202,6 @@
 		3F77864E1C8D106C00A50A85 /* InputBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarCell.swift; sourceTree = "<group>"; };
 		3F77864F1C8D106C00A50A85 /* InputBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputBarCell.xib; sourceTree = "<group>"; };
 		3FB4F9381FBB305600B91C50 /* keyboard_voice_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_voice_record@2x.png"; sourceTree = "<group>"; };
-		8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZJInputBar_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,7 +211,6 @@
 			files = (
 				020DBF951FBB038100BB3E15 /* libopencore-amrwb.a in Frameworks */,
 				020DBF941FBB038100BB3E15 /* libopencore-amrnb.a in Frameworks */,
-				29350FC61D5C9C2245FEFDD5 /* Pods_ZJInputBar_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,30 +417,11 @@
 			path = storyboard;
 			sourceTree = "<group>";
 		};
-		04259DC88CD7ED72B2CC7B4C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */,
-				8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		36904AC1D1CA57653597165F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				15C525B584484C581FE4E2DF /* Pods_ZJInputBar_Swift.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		3F77862F1C8D101500A50A85 = {
 			isa = PBXGroup;
 			children = (
 				3F77863A1C8D101500A50A85 /* ZJInputBar_Swift */,
 				3F7786391C8D101500A50A85 /* Products */,
-				04259DC88CD7ED72B2CC7B4C /* Pods */,
-				36904AC1D1CA57653597165F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -501,12 +477,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F77864A1C8D101600A50A85 /* Build configuration list for PBXNativeTarget "ZJInputBar_Swift" */;
 			buildPhases = (
-				B7BE639CC30CA3808F07E4A6 /* [CP] Check Pods Manifest.lock */,
 				3F7786341C8D101500A50A85 /* Sources */,
 				3F7786351C8D101500A50A85 /* Frameworks */,
 				3F7786361C8D101500A50A85 /* Resources */,
-				11641399CD833819D9BF628D /* [CP] Embed Pods Frameworks */,
-				A2ED2A3B891E298E9AA6C0E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -633,62 +606,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		11641399CD833819D9BF628D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A2ED2A3B891E298E9AA6C0E5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZJInputBar_Swift/Pods-ZJInputBar_Swift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B7BE639CC30CA3808F07E4A6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ZJInputBar_Swift-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3F7786341C8D101500A50A85 /* Sources */ = {
@@ -835,7 +752,6 @@
 		};
 		3F77864B1C8D101600A50A85 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34CBFCA18006CB3767390B80 /* Pods-ZJInputBar_Swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -859,7 +775,6 @@
 		};
 		3F77864C1C8D101600A50A85 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8ECBFFB4CF5040C38BF1F4D9 /* Pods-ZJInputBar_Swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 
 enum InputBarCellType{
@@ -64,7 +63,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     @IBOutlet weak var faceCollectionView: UICollectionView!
     @IBOutlet weak var otherCollectionView: UICollectionView!
-    var faceColldata:[[String:String]] = [];
+    var faceColldata:[[String:Any]] = [];
     var otherColldata:[[String:String]] = [
         ["text":"图片","image":"chat_other_pic"],
         ["text":"拍照","image":"chat_other_photo"]
@@ -117,14 +116,22 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     }
     
     func initFaceData(){
-        for (key,value) in ZJEmoji.emojiMap{
-            let itemData = ["text":key,"image":value];
-            self.faceColldata.append(itemData);
+        DispatchQueue.global().async {
+            for (key,value) in ZJEmoji.emojiMap{
+                let image = UIImage(named:value);
+                let itemData = ["text":key,"image":value,"imageData":image as Any] as [String : Any];
+                self.faceColldata.append(itemData);
+            }
+            DispatchQueue.main.async {
+                self.faceCollectionView.reloadData();
+            }
+            
         }
+        
     }
     
     func initFaceCollView(){
-        initFaceData();
+        
         self.faceCollectionView.register(UINib.init(nibName: "FaceCollCell", bundle: nil), forCellWithReuseIdentifier: "FaceCollCell");
         self.faceCollectionView.showsHorizontalScrollIndicator = false;
         self.faceCollectionView.showsVerticalScrollIndicator = true;
@@ -138,6 +145,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         self.faceCollectionView.collectionViewLayout = flowLayout;
         self.faceCollectionView.dataSource = self;
         self.faceCollectionView.delegate = self;
+        initFaceData();
     }
     
     func initOtherCollView(){
@@ -512,11 +520,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         if(collectionView.tag == 1){
             let itemdata = faceColldata[indexPath.row];
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollCell", for: indexPath) as! FaceCollCell;
-            DispatchQueue.global(qos: .userInitiated).async {
-                let image = UIImage(named:itemdata["image"]!);
-                DispatchQueue.main.async {
-                    cell.faceImageView.image = image;
-                }
+            if let img = itemdata["imageData"]{
+                cell.faceImageView.image = img as? UIImage;
             }
             return  cell;
         }else{
@@ -545,7 +550,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(collectionView.tag == 1){
             let itemdata = faceColldata[indexPath.row];
-            self.inputText = self.inputText + itemdata["text"]!;
+            self.inputText = self.inputText + (itemdata["text"] as! String);
             updateInputTextView();
         }else{
             let itemdata = otherColldata[indexPath.row];
