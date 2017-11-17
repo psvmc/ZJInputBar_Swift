@@ -9,10 +9,16 @@
 import UIKit
 
 class OtherCollCell: UICollectionViewCell {
-
+    @IBOutlet weak var imageOuterView: UIView!
+    
+    @IBOutlet weak var topImageView: UIImageView!
+    @IBOutlet weak var bottomLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        imageOuterView.layer.masksToBounds = true;
+        imageOuterView.layer.cornerRadius = 10;
+        imageOuterView.layer.borderColor = UIColor.lightGray.cgColor;
+        imageOuterView.layer.borderWidth = 1.0/UIScreen.main.scale;
     }
 
 }

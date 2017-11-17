@@ -22,6 +22,7 @@ enum InputBarCellType{
 public protocol InputBarCellDelegate : NSObjectProtocol{
     func inputBarCellSendText(text:String);
     func inputBarCellSendVoice(file: String!, duration: TimeInterval);
+    func inputBarCellSendOther(name: String!);
 }
 
 class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate {
@@ -64,6 +65,10 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     @IBOutlet weak var faceCollectionView: UICollectionView!
     @IBOutlet weak var otherCollectionView: UICollectionView!
     var faceColldata:[[String:String]] = [];
+    var otherColldata:[[String:String]] = [
+        ["text":"图片","image":"chat_other_pic"],
+        ["text":"拍照","image":"chat_other_photo"]
+    ];
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,9 +81,9 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         leftAudioVolume.type = .left;
         rightAudioVolume.type = .right;
         self.updateVoiceState(.ready);
-        self.inputTextView.returnKeyType = .send;
-    
+        self.inputTextView.returnKeyType = UIReturnKeyType.send;
         initFaceCollView();
+        initOtherCollView();
         addEvent();
     }
     
@@ -91,6 +96,11 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         self.changeStyle(.Default)
     }
     
+    func clearInputTextView (){
+        self.inputText = "";
+        self.updateInputTextView();
+    }
+    
     func addEvent(){
         //添加事件
         self.leftVoiceButton.addTarget(self, action: #selector(InputBarCell.leftVoiceButtonClick(_:)), for: UIControlEvents.touchUpInside);
@@ -101,7 +111,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         self.rightAddButton.addTarget(self, action: #selector(InputBarCell.rightAddButtonClick(_:)), for: UIControlEvents.touchUpInside)
         
         self.faceSendButton.addTarget(self, action: #selector(InputBarCell.faceSendButtonClick(_:)), for: UIControlEvents.touchUpInside)
-        self.inputTextView.returnKeyType = UIReturnKeyType.done;
+        
         self.inputTextView.delegate = self;
         self.inputTextView.alwaysBounceVertical = false;
     }
@@ -124,9 +134,26 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         flowLayout.scrollDirection = UICollectionViewScrollDirection.vertical;
         flowLayout.minimumInteritemSpacing = 0;
         flowLayout.minimumLineSpacing = 0;
+        self.faceCollectionView.tag = 1;
         self.faceCollectionView.collectionViewLayout = flowLayout;
         self.faceCollectionView.dataSource = self;
         self.faceCollectionView.delegate = self;
+    }
+    
+    func initOtherCollView(){
+        self.otherCollectionView.register(UINib.init(nibName: "OtherCollCell", bundle: nil), forCellWithReuseIdentifier: "OtherCollCell");
+        self.otherCollectionView.showsHorizontalScrollIndicator = false;
+        self.otherCollectionView.showsVerticalScrollIndicator = true;
+        self.otherCollectionView.backgroundColor = UIColor.clear;
+        self.otherCollectionView.isScrollEnabled = true;
+        let flowLayout = UICollectionViewFlowLayout();
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.vertical;
+        flowLayout.minimumInteritemSpacing = 0;
+        flowLayout.minimumLineSpacing = 0;
+        self.otherCollectionView.tag = 2;
+        self.otherCollectionView.collectionViewLayout = flowLayout;
+        self.otherCollectionView.dataSource = self;
+        self.otherCollectionView.delegate = self;
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -143,9 +170,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             self.rightKeyboardButton.isHidden = true;
             self.midVoiceOutView.isHidden = true;
             self.midInputOutView.isHidden = false;
-            self.talkView.isHidden = false;
-            self.faceView.isHidden = true;
-            self.otherView.isHidden = true;
+            
         case .LeftVoice:
             self.leftKeyboardButton.isHidden = false;
             self.leftVoiceButton.isHidden = true;
@@ -288,10 +313,6 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         duration = 0;
     }
     
-
-    
-    
-    
     @objc func leftVoiceButtonClick(_ button:UIButton){
         self.changeStyle(.LeftVoice)
         showMoreView();
@@ -428,7 +449,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     func updateInputTextView(){
         self.inputTextView.attributedText = ZJEmoji.getAttributedText(self.inputText);
-
+        self.inputTextView.flashScrollIndicators();
         if(self.inputText.endIndex.encodedOffset > 0){
             self.backgroundTextView.text = "";
         }else{
@@ -439,13 +460,17 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         var textViewHeight: CGFloat = textViewSize.height + 16;
         if(textViewHeight <= 50){
             textViewHeight = 50;
-        }
-        if (textViewHeight > 130) {
+            self.inputTextView.isScrollEnabled = false;
+        }else if (textViewHeight > 130) {
             textViewHeight = 130
+            self.inputTextView.isScrollEnabled = true;
+        }else{
+            self.inputTextView.isScrollEnabled = false;
         }
         
         self.inputBarHeight = textViewHeight;
         self.frame = CGRect(x: 0, y: self.inputBarDefaultY - textViewHeight - self.viewPaddingBottom, width: self.screenWidth, height: textViewHeight + 200);
+        
     }
     
     func changeInputBarFrame(_ duration:TimeInterval){
@@ -475,29 +500,57 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return faceColldata.count;
+        if(collectionView.tag == 1){
+            return faceColldata.count;
+        }else{
+            return otherColldata.count;
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let itemdata = faceColldata[indexPath.row];
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollCell", for: indexPath) as! FaceCollCell;
-        DispatchQueue.global(qos: .userInitiated).async {
-            let image = UIImage(named:itemdata["image"]!);
-            DispatchQueue.main.async {
-                cell.faceImageView.image = image;
+        if(collectionView.tag == 1){
+            let itemdata = faceColldata[indexPath.row];
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollCell", for: indexPath) as! FaceCollCell;
+            DispatchQueue.global(qos: .userInitiated).async {
+                let image = UIImage(named:itemdata["image"]!);
+                DispatchQueue.main.async {
+                    cell.faceImageView.image = image;
+                }
             }
+            return  cell;
+        }else{
+            let itemdata = otherColldata[indexPath.row];
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OtherCollCell", for: indexPath) as! OtherCollCell;
+            DispatchQueue.global(qos: .userInitiated).async {
+                let image = UIImage(named:itemdata["image"]!);
+                DispatchQueue.main.async {
+                    cell.topImageView.image = image;
+                }
+            }
+            cell.bottomLabel.text = itemdata["text"]
+            return  cell;
         }
-        
-        return  cell;
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.faceCollectionView.frame.width/7, height: self.faceCollectionView.frame.width/7);
+        if(collectionView.tag == 1){
+            return CGSize(width: collectionView.frame.width/7, height: collectionView.frame.width/7);
+        }else{
+            return CGSize(width: collectionView.frame.width/4, height: collectionView.frame.height/2);
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let itemdata = faceColldata[indexPath.row];
-        self.inputText = self.inputText + itemdata["text"]!;
-        updateInputTextView();
+        if(collectionView.tag == 1){
+            let itemdata = faceColldata[indexPath.row];
+            self.inputText = self.inputText + itemdata["text"]!;
+            updateInputTextView();
+        }else{
+            let itemdata = otherColldata[indexPath.row];
+            self.delegate?.inputBarCellSendOther(name: itemdata["text"]!);
+        }
+        
     }
 }

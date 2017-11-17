@@ -48,10 +48,15 @@ class ChatViewController: UIViewController,InputBarCellDelegate {
     
     func inputBarCellSendText(text: String) {
         print("发送文字消息:\(text)")
+        self.inputBarCell.clearInputTextView();
     }
     
     func inputBarCellSendVoice(file: String!, duration: TimeInterval) {
         print("发送语音消息:file：\(file!) duration：\(duration)")
+    }
+    
+    func inputBarCellSendOther(name: String!) {
+        print("点击更多页面:项：\(name!)")
     }
    
 

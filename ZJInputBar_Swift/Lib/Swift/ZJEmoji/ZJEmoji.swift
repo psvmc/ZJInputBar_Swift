@@ -84,9 +84,9 @@ class ZJEmoji{
         //对齐方式
         paragraphStyle.alignment = NSTextAlignment.left;
         //指定段落开始的缩进像素
-        paragraphStyle.firstLineHeadIndent = 4;
+        paragraphStyle.firstLineHeadIndent = 2;
         //调整全部文字的缩进像素
-        paragraphStyle.headIndent = 4;
+        paragraphStyle.headIndent = 2;
         
         let strAttr = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16),
@@ -123,7 +123,7 @@ class ZJEmoji{
                     
                     mutableAttributedString.insert(
                         NSAttributedString(string: leftStr),
-                        at: mutableAttributedString.string.endIndex.encodedOffset
+                        at: mutableAttributedString.string.count
                     );
                     
                     
@@ -135,19 +135,19 @@ class ZJEmoji{
                     
                     mutableAttributedString.insert(
                         attributedString,
-                        at: mutableAttributedString.string.endIndex.encodedOffset
+                        at: mutableAttributedString.string.count
                     );
                 }else{
                     mutableAttributedString.insert(
                         NSAttributedString(string: leftStr + midStr),
-                        at: mutableAttributedString.string.endIndex.encodedOffset
+                        at: mutableAttributedString.string.count
                     )
                 }
                 
             }else{
                 mutableAttributedString.insert(
                     NSAttributedString(string: tempMessage),
-                    at: mutableAttributedString.string.endIndex.encodedOffset
+                    at: mutableAttributedString.string.count
                 )
                 isContain = false;
             }
