@@ -415,9 +415,9 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        //print("range:\(range)")
+        print("range:\(range)")
         //print("text:\(text)")
-        //let length = range.length;
+        let length = range.length;
         if(text == "\n"){
             //点击了发送键
             if(!self.inputText.isEmpty){
@@ -450,12 +450,18 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             return false;
         }else{
             //有文字新增
-            self.inputText.append(text);
-            updateInputTextView();
-            return false;
+            if(textView.markedTextRange == nil){
+                self.inputText.append(text);
+                updateInputTextView();
+                return true;
+            }else{
+                return true;
+            }
         }
         
     }
+    
+    
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.changeStyle(.Default)

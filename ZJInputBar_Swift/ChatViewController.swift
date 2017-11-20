@@ -62,7 +62,7 @@ class ChatViewController: UIViewController,InputBarCellDelegate {
     }
     
     func inputBarCellChangeY(_ y: CGFloat) {
-        print("输入条定点的Y为：\(y)")
+        //print("输入条定点的Y为：\(y)")
     }
    
 
