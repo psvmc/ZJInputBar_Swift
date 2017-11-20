@@ -22,6 +22,7 @@ public protocol InputBarCellDelegate : NSObjectProtocol{
     func inputBarCellSendText(text:String);
     func inputBarCellSendVoice(file: String!, duration: TimeInterval);
     func inputBarCellSendOther(name: String!);
+    func inputBarCellChangeY(_ y:CGFloat);
 }
 
 class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate {
@@ -84,6 +85,10 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         initFaceCollView();
         initOtherCollView();
         addEvent();
+    }
+    
+    func initDefaultY(_ defaultY:CGFloat){
+        self.inputBarDefaultY = defaultY;
     }
     
     func initFrame (){
@@ -325,6 +330,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         self.changeStyle(.LeftVoice)
         showMoreView();
         self.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.viewPaddingBottom - 50, width: self.screenWidth, height: 250);
+        self.delegate?.inputBarCellChangeY(self.inputBarDefaultY - self.viewPaddingBottom - 50)
     }
     
     @objc func voiceHideButtonClick(_ button:UIButton){
@@ -438,7 +444,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
                 }else{
                     self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
                 }
-                 updateInputTextView();
+                updateInputTextView();
             }
             
             return false;
@@ -448,7 +454,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
             updateInputTextView();
             return false;
         }
- 
+        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -457,7 +463,6 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     func updateInputTextView(){
         self.inputTextView.attributedText = ZJEmoji.getAttributedText(self.inputText);
-        self.inputTextView.flashScrollIndicators();
         if(self.inputText.endIndex.encodedOffset > 0){
             self.backgroundTextView.text = "";
         }else{
@@ -478,10 +483,11 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         
         self.inputBarHeight = textViewHeight;
         self.frame = CGRect(x: 0, y: self.inputBarDefaultY - textViewHeight - self.viewPaddingBottom, width: self.screenWidth, height: textViewHeight + 200);
-        
+        self.delegate?.inputBarCellChangeY(self.inputBarDefaultY - textViewHeight - self.viewPaddingBottom)
     }
     
     func changeInputBarFrame(_ duration:TimeInterval){
+        self.delegate?.inputBarCellChangeY(self.inputBarDefaultY - self.viewPaddingBottom - self.inputBarHeight);
         UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
             self.frame = CGRect(x: 0, y: self.inputBarDefaultY - self.viewPaddingBottom - self.inputBarHeight, width: self.screenWidth, height: 250);
         }, completion: { (result) in
@@ -559,3 +565,4 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
         
     }
 }
+

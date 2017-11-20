@@ -9,6 +9,8 @@
 import UIKit
 
 class ChatViewController: UIViewController,InputBarCellDelegate {
+    
+    
    
     
    var inputBarCell:InputBarCell!;//输入的Bar
@@ -57,6 +59,10 @@ class ChatViewController: UIViewController,InputBarCellDelegate {
     
     func inputBarCellSendOther(name: String!) {
         print("点击更多页面:项：\(name!)")
+    }
+    
+    func inputBarCellChangeY(_ y: CGFloat) {
+        print("输入条定点的Y为：\(y)")
     }
    
 
