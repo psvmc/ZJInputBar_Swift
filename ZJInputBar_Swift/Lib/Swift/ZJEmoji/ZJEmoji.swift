@@ -68,14 +68,7 @@ class ZJEmoji{
         "[兔子]": "d_tuzi",
     ];
     
-    
-    
-    static func getAttributedText(_ message:String) -> NSMutableAttributedString{
-        var isContain:Bool = true;
-        let mutableAttributedString = NSMutableAttributedString();
-   
-        var tempMessage = message;
-        
+    static func getAttrs() -> [NSAttributedStringKey : Any]{
         let paragraphStyle = NSMutableParagraphStyle();
         //行间距
         paragraphStyle.lineSpacing = 5;
@@ -98,8 +91,54 @@ class ZJEmoji{
             NSAttributedStringKey.obliqueness:0,
             NSAttributedStringKey.expansion:0
             ] as [NSAttributedStringKey : Any];
+        return strAttr;
+    }
+    
+    
+    //获取单个表情
+    static func getEmojiAttributedText(_ emojiStr:String) -> NSAttributedString{
+        let mutableAttributedString = NSMutableAttributedString();
+        if let imageUrl = emojiMap[emojiStr]{
+            let textAttachment = ZJTextAttachment();
+            textAttachment.image = UIImage(named: imageUrl);
+            let attributedString = NSAttributedString(attachment: textAttachment);
+            mutableAttributedString.insert(
+                attributedString,
+                at: mutableAttributedString.string.count
+            );
+        }else{
+            let attributedString = NSAttributedString(string: emojiStr)
+            mutableAttributedString.insert(
+                attributedString,
+                at: mutableAttributedString.string.count
+            );
+        }
+        mutableAttributedString.addAttributes(getAttrs(), range: NSRange(location: 0, length: mutableAttributedString.length));
+        return mutableAttributedString;
+    }
+    
+    
+    //获取新增后的字符串
+    static func getAttributedTextAppend(originStr:NSAttributedString,appendStr:String) -> NSMutableAttributedString{
+        let mutableAttributedString = NSMutableAttributedString();
+        mutableAttributedString.insert(
+            originStr,
+            at: mutableAttributedString.string.count
+        );
         
-        
+        mutableAttributedString.insert(
+            getEmojiAttributedText(appendStr),
+            at: mutableAttributedString.string.count
+        );
+        return mutableAttributedString;
+    }
+    //获取所有表情
+    static func getAttributedText(_ message:String) -> NSMutableAttributedString{
+        var isContain:Bool = true;
+        let mutableAttributedString = NSMutableAttributedString();
+   
+        var tempMessage = message;
+
         //判断当前字符串是否还有表情的标志。
         while isContain{
             
@@ -154,7 +193,7 @@ class ZJEmoji{
         }
         
         
-        mutableAttributedString.addAttributes(strAttr, range: NSRange(location: 0, length: mutableAttributedString.length));
+        mutableAttributedString.addAttributes(getAttrs(), range: NSRange(location: 0, length: mutableAttributedString.length));
         return mutableAttributedString;
     }
 }

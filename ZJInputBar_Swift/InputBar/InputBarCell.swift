@@ -43,7 +43,6 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     @IBOutlet weak var otherView: UIView!
     @IBOutlet weak var faceSendButton: UIButton!
     
-    var inputText:String! = "";
     var viewPaddingBottom:CGFloat = 0;//输入条距离底部的距离
     var inputBarHeight:CGFloat = 50;//上面输入条的高度
     var isShowMoreView = false;//是否显示更多的View
@@ -101,7 +100,7 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     }
     
     func clearInputTextView (){
-        self.inputText = "";
+        self.inputTextView.text = "";
         self.updateInputTextView();
     }
     
@@ -366,8 +365,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     
     @objc func faceSendButtonClick(_ button:UIButton){
-        if(!self.inputText.isEmpty){
-            delegate?.inputBarCellSendText(text:self.inputText);
+        if(!self.inputTextView.text.isEmpty){
+            delegate?.inputBarCellSendText(text:self.inputTextView.text);
         }
     }
     
@@ -415,20 +414,21 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        print("range:\(range)")
+        
         //print("text:\(text)")
-        let length = range.length;
+        //let length = range.length;
+        let inputText = self.inputTextView.text!;
         if(text == "\n"){
             //点击了发送键
-            if(!self.inputText.isEmpty){
-                delegate?.inputBarCellSendText(text:self.inputText);
+            if(!self.inputTextView.text.isEmpty){
+                delegate?.inputBarCellSendText(text:self.inputTextView.text);
             }
             return false;
         }else if(text == ""){
             //点击了删除键
-            if(!self.inputText.isEmpty){
-                if(self.inputText.hasSuffix("]")){
-                    var tempText = String(self.inputText.reversed());
+            if(!inputText.isEmpty){
+                if(inputText.hasSuffix("]")){
+                    var tempText = String(inputText.reversed());
                     //print("tempText\(tempText)");
                     if let range = tempText.range(
                         of: "\\][^\\[^\\]]+\\[",
@@ -437,44 +437,37 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
                         locale: nil){
                         tempText = tempText.replacingCharacters(in: range, with: "")
                         //print("tempText\(tempText)");
-                        self.inputText = String(tempText.reversed());
+                        self.inputTextView.text = String(tempText.reversed());
                     }else{
-                        self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
+                        self.inputTextView.text = String(inputText[..<inputText.index(before: inputText.endIndex)])
                     }
                 }else{
-                    self.inputText = String(self.inputText[..<self.inputText.index(before: self.inputText.endIndex)])
+                    self.inputTextView.text = String(inputText[..<inputText.index(before: inputText.endIndex)])
                 }
-                updateInputTextView();
             }
-            
+            updateInputTextView();
             return false;
         }else{
-            //有文字新增
-            if(textView.markedTextRange == nil){
-                self.inputText.append(text);
-                updateInputTextView();
-                return true;
-            }else{
-                return true;
-            }
+         
+            return true;
         }
         
     }
-    
-    
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.changeStyle(.Default)
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        updateInputTextView();
+    }
+    
     func updateInputTextView(){
-        self.inputTextView.attributedText = ZJEmoji.getAttributedText(self.inputText);
-        if(self.inputText.endIndex.encodedOffset > 0){
+        if(self.inputTextView.text!.count > 0){
             self.backgroundTextView.text = "";
         }else{
             self.backgroundTextView.text = "请输入回复";
         }
-        
         let textViewSize = self.inputTextView.sizeThatFits(CGSize(width:self.inputTextView.frame.width,height:CGFloat(MAXFLOAT)));
         var textViewHeight: CGFloat = textViewSize.height + 16;
         if(textViewHeight <= 50){
@@ -562,7 +555,8 @@ class InputBarCell: UITableViewCell,AudioRecordViewDelegate,UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(collectionView.tag == 1){
             let itemdata = faceColldata[indexPath.row];
-            self.inputText = self.inputText + (itemdata["text"] as! String);
+            let emojiStr = (itemdata["text"] as! String);
+            self.inputTextView.text = self.inputTextView.text + emojiStr;
             updateInputTextView();
         }else{
             let itemdata = otherColldata[indexPath.row];
